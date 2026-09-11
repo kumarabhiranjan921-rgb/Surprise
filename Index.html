@@ -1,1 +1,456 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise ❤️</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  background:#080914;
+  color:white;
+  overflow:hidden;
+}
+.screen{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  text-align:center;
+}
+.screen.active{display:flex}
+
+.card{
+  width:100%;
+  max-width:430px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:28px;
+  padding:30px 22px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 70px rgba(0,0,0,.45);
+}
+
+.small{
+  color:#ff9fbd;
+  letter-spacing:3px;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:14px;
+}
+
+p{
+  color:#d5d5df;
+  line-height:1.6;
+}
+
+.btn{
+  border:0;
+  padding:15px 25px;
+  border-radius:50px;
+  margin-top:25px;
+  font-size:16px;
+  font-weight:bold;
+  color:white;
+  background:linear-gradient(135deg,#ff2874,#ff5b9a);
+  box-shadow:0 10px 30px rgba(255,40,116,.3);
+}
+
+.btn:disabled{
+  opacity:.35;
+}
+
+/* ENVELOPE */
+.envelope{
+  width:220px;
+  height:145px;
+  margin:25px auto;
+  position:relative;
+  cursor:pointer;
+}
+
+.env-body{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#ff477e,#b91552);
+  border-radius:8px;
+  box-shadow:0 20px 50px rgba(255,30,100,.3);
+}
+
+.flap{
+  position:absolute;
+  left:0;
+  top:0;
+  width:0;
+  height:0;
+  border-left:110px solid transparent;
+  border-right:110px solid transparent;
+  border-top:80px solid #ff719b;
+  transform-origin:top;
+  transition:1s;
+  z-index:3;
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+}
+
+.heart{
+  position:absolute;
+  z-index:4;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:45px;
+}
+
+/* CONDITIONS */
+.condition{
+  display:flex;
+  gap:12px;
+  text-align:left;
+  padding:13px;
+  margin:9px 0;
+  border-radius:15px;
+  background:rgba(255,255,255,.06);
+}
+
+.condition input{
+  width:20px;
+  height:20px;
+  accent-color:#ff397c;
+}
+
+/* SIGNATURE */
+.signbox{
+  margin-top:18px;
+  background:white;
+  border-radius:15px;
+  height:150px;
+  position:relative;
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  border-radius:15px;
+  touch-action:none;
+}
+
+.clear{
+  position:absolute;
+  right:8px;
+  top:8px;
+  border:0;
+  background:#eee;
+  padding:7px 12px;
+  border-radius:20px;
+}
+
+.share{
+  margin-top:16px;
+  padding:14px;
+  border-radius:15px;
+  background:rgba(255,255,255,.07);
+  color:#ffc0d3;
+  font-size:14px;
+}
+
+/* PHOTOS */
+.photo{
+  width:100%;
+  height:330px;
+  object-fit:cover;
+  border-radius:22px;
+  margin:15px 0;
+}
+
+.dots{
+  margin-top:5px;
+  color:#ff76a5;
+}
+
+/* FINAL */
+.bigheart{
+  font-size:90px;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.15)}
+}
+
+.fade{
+  animation:fade .7s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE -->
+<section class="screen active" id="s1">
+  <div class="card fade">
+    <div class="small">A SECRET FOR YOU</div>
+    <h1>एक छोटा सा Surprise 💌</h1>
+    <p>इस envelope को खोलो...</p>
+
+    <div class="envelope" id="env" onclick="openEnvelope()">
+      <div class="env-body"></div>
+      <div class="flap"></div>
+      <div class="heart">❤️</div>
+    </div>
+
+    <p>Tap the envelope</p>
+  </div>
+</section>
+
+<!-- CONDITIONS -->
+<section class="screen" id="s2">
+  <div class="card fade">
+    <div class="small">BEFORE YOU CONTINUE</div>
+    <h1>कुछ छोटी शर्तें ❤️</h1>
+
+    <div class="condition">
+      <input type="checkbox" class="agree">
+      <span>पूरी surprise journey आखिर तक देखनी होगी।</span>
+    </div>
+
+    <div class="condition">
+      <input type="checkbox" class="agree">
+      <span>बीच में बिना मुस्कुराए निकलना allowed नहीं है। 😌</span>
+    </div>
+
+    <div class="condition">
+      <input type="checkbox" class="agree">
+      <span>इस surprise को special समझना होगा। ❤️</span>
+    </div>
+
+    <div class="condition">
+      <input type="checkbox" class="agree">
+      <span>सब पढ़कर नीचे अपना sign करना होगा। ✍️</span>
+    </div>
+
+    <button class="btn" onclick="goSign()">Agree & Continue</button>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="screen" id="s3">
+  <div class="card fade">
+    <div class="small">ONE LAST THING</div>
+    <h1>अब अपना Sign करो ✍️</h1>
+
+    <p>नीचे उंगली से अपना signature करो।</p>
+
+    <div class="signbox">
+      <canvas id="canvas"></canvas>
+      <button class="clear" onclick="clearSign()">Clear</button>
+    </div>
+
+    <div class="share">
+      📸 <b>Take a screenshot</b> and share it with Abhiranjan ❤️
+    </div>
+
+    <button class="btn" id="continueBtn" onclick="goPhotos()" disabled>
+      🔒 Sign करके आगे बढ़ें
+    </button>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section class="screen" id="s4">
+  <div class="card fade">
+    <div class="small">OUR MEMORIES</div>
+    <h1>कुछ खूबसूरत यादें 📸</h1>
+
+    <img id="photo" class="photo"
+      src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80">
+
+    <div class="dots" id="dots">● ○ ○</div>
+
+    <button class="btn" onclick="nextPhoto()">Next Memory →</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="screen" id="s5">
+  <div class="card fade">
+    <div class="bigheart">❤️</div>
+    <div class="small">JUST FOR YOU</div>
+
+    <h1>Surprise! 🎉</h1>
+
+    <p>
+      कुछ लोग जिंदगी में बस आते नहीं हैं,
+      बल्कि जिंदगी को थोड़ा और खूबसूरत बना जाते हैं।
+      <br><br>
+      और तुम उन्हीं लोगों में से एक हो। ❤️
+    </p>
+
+    <button class="btn" onclick="location.reload()">
+      फिर से शुरू करें ✨
+    </button>
+  </div>
+</section>
+
+<script>
+
+function show(id){
+  document.querySelectorAll('.screen')
+    .forEach(x=>x.classList.remove('active'));
+
+  document.getElementById(id).classList.add('active');
+}
+
+function openEnvelope(){
+  document.getElementById('env').classList.add('open');
+
+  setTimeout(()=>{
+    show('s2');
+  },1000);
+}
+
+/* CONDITIONS */
+const checks=document.querySelectorAll('.agree');
+
+checks.forEach(c=>{
+  c.addEventListener('change',()=>{
+    const all=[...checks].every(x=>x.checked);
+    document.querySelector('#s2 .btn').disabled=!all;
+  });
+});
+
+function goSign(){
+  show('s3');
+  setupCanvas();
+}
+
+/* SIGNATURE */
+let canvas;
+let ctx;
+let drawing=false;
+let signed=false;
+
+function setupCanvas(){
+
+  canvas=document.getElementById('canvas');
+
+  const rect=canvas.getBoundingClientRect();
+
+  canvas.width=rect.width*2;
+  canvas.height=rect.height*2;
+
+  ctx=canvas.getContext('2d');
+
+  ctx.scale(2,2);
+
+  ctx.strokeStyle="#222";
+  ctx.lineWidth=2.5;
+  ctx.lineCap="round";
+
+  function pos(e){
+    const r=canvas.getBoundingClientRect();
+
+    if(e.touches){
+      return {
+        x:e.touches[0].clientX-r.left,
+        y:e.touches[0].clientY-r.top
+      };
+    }
+
+    return {
+      x:e.clientX-r.left,
+      y:e.clientY-r.top
+    };
+  }
+
+  function start(e){
+    e.preventDefault();
+    drawing=true;
+    const p=pos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+  }
+
+  function move(e){
+    if(!drawing)return;
+    e.preventDefault();
+    const p=pos(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+
+    signed=true;
+    document.getElementById('continueBtn').disabled=false;
+    document.getElementById('continueBtn').innerText="Continue →";
+  }
+
+  function end(){
+    drawing=false;
+  }
+
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('mouseup',end);
+
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',end);
+}
+
+function clearSign(){
+  if(!ctx)return;
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  signed=false;
+
+  document.getElementById('continueBtn').disabled=true;
+  document.getElementById('continueBtn').innerText="🔒 Sign करके आगे बढ़ें";
+}
+
+/* PHOTOS */
+const photos=[
+"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
+"https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80",
+"https://images.unsplash.com/photo-1518621012118-6b7d6e9b4b0b?auto=format&fit=crop&w=700&q=80"
+];
+
+let photoIndex=0;
+
+function goPhotos(){
+  show('s4');
+}
+
+function nextPhoto(){
+
+  photoIndex++;
+
+  if(photoIndex>=photos.length){
+    show('s5');
+    return;
+  }
+
+  document.getElementById('photo').src=photos[photoIndex];
+
+  document.getElementById('dots').innerText=
+    photos.map((x,i)=>i===photoIndex?"●":"○").join(" ");
+}
+
+</script>
+
+</body>
+  </html>
