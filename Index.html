@@ -1,191 +1,214 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Little Surprise ❤️</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Arial,sans-serif;
-  background:#080914;
-  color:white;
-  overflow:hidden;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top,#302044 0%,#100d18 45%,#07070c 100%);
+  color:white;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
 .screen{
-  position:fixed;
-  inset:0;
   display:none;
+  min-height:100vh;
+  padding:25px 18px;
   align-items:center;
   justify-content:center;
-  padding:25px;
+  flex-direction:column;
   text-align:center;
 }
-.screen.active{display:flex}
+
+.screen.active{
+  display:flex;
+}
 
 .card{
   width:100%;
-  max-width:430px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
+  max-width:500px;
+  padding:28px 22px;
   border-radius:28px;
-  padding:30px 22px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 25px 80px rgba(0,0,0,.45);
   backdrop-filter:blur(18px);
-  box-shadow:0 20px 70px rgba(0,0,0,.45);
-}
-
-.small{
-  color:#ff9fbd;
-  letter-spacing:3px;
-  font-size:12px;
-  margin-bottom:12px;
 }
 
 h1{
   font-size:32px;
-  margin-bottom:14px;
+  margin-bottom:12px;
+}
+
+h2{
+  font-size:25px;
+  margin-bottom:15px;
 }
 
 p{
-  color:#d5d5df;
+  color:#d8d5df;
   line-height:1.6;
 }
 
-.btn{
+button{
   border:0;
-  padding:15px 25px;
+  padding:14px 25px;
   border-radius:50px;
-  margin-top:25px;
+  color:white;
   font-size:16px;
   font-weight:bold;
-  color:white;
-  background:linear-gradient(135deg,#ff2874,#ff5b9a);
-  box-shadow:0 10px 30px rgba(255,40,116,.3);
-}
-
-.btn:disabled{
-  opacity:.35;
-}
-
-/* ENVELOPE */
-.envelope{
-  width:220px;
-  height:145px;
-  margin:25px auto;
-  position:relative;
   cursor:pointer;
+  margin-top:20px;
+  background:linear-gradient(135deg,#ff4f9a,#9b5cff);
+  box-shadow:0 10px 30px rgba(255,79,154,.3);
+}
+
+button:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+/* Envelope */
+
+.envelope{
+  width:230px;
+  height:155px;
+  position:relative;
+  margin:25px auto 30px;
+  cursor:pointer;
+  perspective:800px;
 }
 
 .env-body{
   position:absolute;
   inset:0;
-  background:linear-gradient(135deg,#ff477e,#b91552);
-  border-radius:8px;
-  box-shadow:0 20px 50px rgba(255,30,100,.3);
+  background:linear-gradient(135deg,#ff4f91,#8f55ff);
+  border-radius:10px;
+  box-shadow:0 20px 45px rgba(0,0,0,.4);
 }
 
-.flap{
+.env-flap{
   position:absolute;
   left:0;
   top:0;
   width:0;
   height:0;
-  border-left:110px solid transparent;
-  border-right:110px solid transparent;
-  border-top:80px solid #ff719b;
+  border-left:115px solid transparent;
+  border-right:115px solid transparent;
+  border-top:80px solid #ff75a9;
   transform-origin:top;
-  transition:1s;
+  transition:.8s;
   z-index:3;
 }
 
-.envelope.open .flap{
+.envelope.open .env-flap{
   transform:rotateX(180deg);
 }
 
 .heart{
   position:absolute;
-  z-index:4;
+  z-index:5;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
   font-size:45px;
 }
 
-/* CONDITIONS */
+/* Conditions */
+
+.conditions{
+  text-align:left;
+  margin-top:20px;
+}
+
 .condition{
   display:flex;
   gap:12px;
-  text-align:left;
-  padding:13px;
-  margin:9px 0;
-  border-radius:15px;
+  align-items:flex-start;
+  padding:14px;
+  margin:10px 0;
+  border-radius:16px;
   background:rgba(255,255,255,.06);
 }
 
 .condition input{
   width:20px;
   height:20px;
-  accent-color:#ff397c;
+  accent-color:#ff4f9a;
+  margin-top:2px;
 }
 
-/* SIGNATURE */
-.signbox{
-  margin-top:18px;
-  background:white;
-  border-radius:15px;
-  height:150px;
-  position:relative;
+.condition label{
+  color:#eee;
+  line-height:1.4;
 }
 
-canvas{
+/* Signature */
+
+#signatureCanvas{
   width:100%;
-  height:100%;
-  border-radius:15px;
+  height:220px;
+  background:white;
+  border-radius:18px;
+  margin-top:20px;
   touch-action:none;
 }
 
 .clear{
-  position:absolute;
-  right:8px;
-  top:8px;
-  border:0;
-  background:#eee;
-  padding:7px 12px;
-  border-radius:20px;
+  background:rgba(255,255,255,.12);
+  box-shadow:none;
 }
 
-.share{
-  margin-top:16px;
-  padding:14px;
-  border-radius:15px;
-  background:rgba(255,255,255,.07);
-  color:#ffc0d3;
-  font-size:14px;
-}
+/* Photos */
 
-/* PHOTOS */
-.photo{
+.photo-box{
   width:100%;
-  height:330px;
-  object-fit:cover;
+  aspect-ratio:4/5;
   border-radius:22px;
-  margin:15px 0;
+  overflow:hidden;
+  margin-top:20px;
+  background:#111;
 }
 
-.dots{
-  margin-top:5px;
-  color:#ff76a5;
+.photo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.5s;
 }
 
-/* FINAL */
-.bigheart{
-  font-size:90px;
-  animation:pulse 1.5s infinite;
+.caption{
+  margin-top:15px;
+  font-size:17px;
+  color:#fff;
+}
+
+/* Final */
+
+.final-heart{
+  font-size:80px;
+  animation:pulse 1.3s infinite;
 }
 
 @keyframes pulse{
   50%{transform:scale(1.15)}
+}
+
+.small{
+  font-size:13px;
+  color:#aaa;
+  margin-top:15px;
 }
 
 .fade{
@@ -193,264 +216,325 @@ canvas{
 }
 
 @keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:none}
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ENVELOPE -->
-<section class="screen active" id="s1">
+<!-- SCREEN 1 -->
+<section id="s1" class="screen active">
   <div class="card fade">
-    <div class="small">A SECRET FOR YOU</div>
-    <h1>एक छोटा सा Surprise 💌</h1>
-    <p>इस envelope को खोलो...</p>
-
-    <div class="envelope" id="env" onclick="openEnvelope()">
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
       <div class="env-body"></div>
-      <div class="flap"></div>
+      <div class="env-flap"></div>
       <div class="heart">❤️</div>
     </div>
 
-    <p>Tap the envelope</p>
+    <h1>A Little Surprise</h1>
+    <p>Someone has prepared something special for you.</p>
+
+    <button onclick="openEnvelope()">Open My Surprise 💌</button>
   </div>
 </section>
 
-<!-- CONDITIONS -->
-<section class="screen" id="s2">
+
+<!-- SCREEN 2 -->
+<section id="s2" class="screen">
   <div class="card fade">
-    <div class="small">BEFORE YOU CONTINUE</div>
-    <h1>कुछ छोटी शर्तें ❤️</h1>
 
-    <div class="condition">
-      <input type="checkbox" class="agree">
-      <span>पूरी surprise journey आखिर तक देखनी होगी।</span>
-    </div>
-
-    <div class="condition">
-      <input type="checkbox" class="agree">
-      <span>बीच में बिना मुस्कुराए निकलना allowed नहीं है। 😌</span>
-    </div>
-
-    <div class="condition">
-      <input type="checkbox" class="agree">
-      <span>इस surprise को special समझना होगा। ❤️</span>
-    </div>
-
-    <div class="condition">
-      <input type="checkbox" class="agree">
-      <span>सब पढ़कर नीचे अपना sign करना होगा। ✍️</span>
-    </div>
-
-    <button class="btn" onclick="goSign()">Agree & Continue</button>
-  </div>
-</section>
-
-<!-- SIGNATURE -->
-<section class="screen" id="s3">
-  <div class="card fade">
-    <div class="small">ONE LAST THING</div>
-    <h1>अब अपना Sign करो ✍️</h1>
-
-    <p>नीचे उंगली से अपना signature करो।</p>
-
-    <div class="signbox">
-      <canvas id="canvas"></canvas>
-      <button class="clear" onclick="clearSign()">Clear</button>
-    </div>
-
-    <div class="share">
-      📸 <b>Take a screenshot</b> and share it with Abhiranjan ❤️
-    </div>
-
-    <button class="btn" id="continueBtn" onclick="goPhotos()" disabled>
-      🔒 Sign करके आगे बढ़ें
-    </button>
-  </div>
-</section>
-
-<!-- PHOTOS -->
-<section class="screen" id="s4">
-  <div class="card fade">
-    <div class="small">OUR MEMORIES</div>
-    <h1>कुछ खूबसूरत यादें 📸</h1>
-
-    <img id="photo" class="photo"
-      src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80">
-
-    <div class="dots" id="dots">● ○ ○</div>
-
-    <button class="btn" onclick="nextPhoto()">Next Memory →</button>
-  </div>
-</section>
-
-<!-- FINAL -->
-<section class="screen" id="s5">
-  <div class="card fade">
-    <div class="bigheart">❤️</div>
-    <div class="small">JUST FOR YOU</div>
-
-    <h1>Surprise! 🎉</h1>
+    <h2>One Little Agreement 💗</h2>
 
     <p>
-      कुछ लोग जिंदगी में बस आते नहीं हैं,
-      बल्कि जिंदगी को थोड़ा और खूबसूरत बना जाते हैं।
-      <br><br>
-      और तुम उन्हीं लोगों में से एक हो। ❤️
+      Before we continue, there are a few little conditions.
+      Read them carefully and agree to all of them.
     </p>
 
-    <button class="btn" onclick="location.reload()">
-      फिर से शुरू करें ✨
+    <div class="conditions">
+
+      <div class="condition">
+        <input type="checkbox" class="agree">
+        <label>I promise to smile at least once while watching this. 😊</label>
+      </div>
+
+      <div class="condition">
+        <input type="checkbox" class="agree">
+        <label>I promise to keep this little surprise special. ❤️</label>
+      </div>
+
+      <div class="condition">
+        <input type="checkbox" class="agree">
+        <label>I promise to read everything till the end. 👀</label>
+      </div>
+
+      <div class="condition">
+        <input type="checkbox" class="agree">
+        <label>I agree to continue this little journey. 💕</label>
+      </div>
+
+    </div>
+
+    <button id="agreeBtn" disabled onclick="showScreen('s3')">
+      Agree & Continue →
     </button>
+
   </div>
 </section>
+
+
+<!-- SCREEN 3 -->
+<section id="s3" class="screen">
+  <div class="card fade">
+
+    <h2>Your Signature ✍️</h2>
+
+    <p>
+      Sign below to unlock the next part of the surprise.
+    </p>
+
+    <canvas id="signatureCanvas"></canvas>
+
+    <button class="clear" onclick="clearSignature()">
+      Clear
+    </button>
+
+    <p class="small">
+      Take a screenshot of your signature and share it with Abhiranjan ❤️
+    </p>
+
+    <button id="continueBtn" disabled onclick="showScreen('s4')">
+      Continue →
+    </button>
+
+  </div>
+</section>
+
+
+<!-- SCREEN 4 -->
+<section id="s4" class="screen">
+  <div class="card fade">
+
+    <h2>Our Little Memories 📸</h2>
+
+    <p>Some moments are worth keeping forever.</p>
+
+    <div class="photo-box">
+      <img id="photo" src="" alt="Memory">
+    </div>
+
+    <div class="caption" id="caption"></div>
+
+    <button onclick="nextPhoto()">
+      Next Memory →
+    </button>
+
+  </div>
+</section>
+
+
+<!-- SCREEN 5 -->
+<section id="s5" class="screen">
+  <div class="card fade">
+
+    <div class="final-heart">❤️</div>
+
+    <h1>That's It...</h1>
+
+    <p>
+      But maybe this little surprise becomes
+      one of your favourite memories. ✨
+    </p>
+
+    <button onclick="location.reload()">
+      Experience Again ↻
+    </button>
+
+  </div>
+</section>
+
 
 <script>
 
-function show(id){
-  document.querySelectorAll('.screen')
-    .forEach(x=>x.classList.remove('active'));
+/* SCREEN CONTROL */
 
-  document.getElementById(id).classList.add('active');
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(screen=>{
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
+
+
+/* ENVELOPE */
 
 function openEnvelope(){
-  document.getElementById('env').classList.add('open');
+
+  const envelope=document.getElementById("envelope");
+
+  envelope.classList.add("open");
 
   setTimeout(()=>{
-    show('s2');
-  },1000);
+    showScreen("s2");
+  },900);
 }
 
-/* CONDITIONS */
-const checks=document.querySelectorAll('.agree');
 
-checks.forEach(c=>{
-  c.addEventListener('change',()=>{
-    const all=[...checks].every(x=>x.checked);
-    document.querySelector('#s2 .btn').disabled=!all;
+/* CONDITIONS */
+
+const checkboxes=document.querySelectorAll(".agree");
+const agreeBtn=document.getElementById("agreeBtn");
+
+checkboxes.forEach(box=>{
+  box.addEventListener("change",()=>{
+    const allChecked=[...checkboxes].every(item=>item.checked);
+    agreeBtn.disabled=!allChecked;
   });
 });
 
-function goSign(){
-  show('s3');
-  setupCanvas();
-}
 
 /* SIGNATURE */
-let canvas;
-let ctx;
+
+const canvas=document.getElementById("signatureCanvas");
+const ctx=canvas.getContext("2d");
+
 let drawing=false;
 let signed=false;
 
-function setupCanvas(){
-
-  canvas=document.getElementById('canvas');
+function resizeCanvas(){
 
   const rect=canvas.getBoundingClientRect();
 
-  canvas.width=rect.width*2;
-  canvas.height=rect.height*2;
+  canvas.width=rect.width;
+  canvas.height=220;
 
-  ctx=canvas.getContext('2d');
-
-  ctx.scale(2,2);
-
-  ctx.strokeStyle="#222";
-  ctx.lineWidth=2.5;
+  ctx.lineWidth=3;
   ctx.lineCap="round";
+  ctx.strokeStyle="#111";
+}
 
-  function pos(e){
-    const r=canvas.getBoundingClientRect();
+resizeCanvas();
 
-    if(e.touches){
-      return {
-        x:e.touches[0].clientX-r.left,
-        y:e.touches[0].clientY-r.top
-      };
-    }
+function getPosition(e){
 
+  const rect=canvas.getBoundingClientRect();
+
+  if(e.touches){
     return {
-      x:e.clientX-r.left,
-      y:e.clientY-r.top
+      x:e.touches[0].clientX-rect.left,
+      y:e.touches[0].clientY-rect.top
     };
   }
 
-  function start(e){
-    e.preventDefault();
-    drawing=true;
-    const p=pos(e);
-    ctx.beginPath();
-    ctx.moveTo(p.x,p.y);
-  }
-
-  function move(e){
-    if(!drawing)return;
-    e.preventDefault();
-    const p=pos(e);
-    ctx.lineTo(p.x,p.y);
-    ctx.stroke();
-
-    signed=true;
-    document.getElementById('continueBtn').disabled=false;
-    document.getElementById('continueBtn').innerText="Continue →";
-  }
-
-  function end(){
-    drawing=false;
-  }
-
-  canvas.addEventListener('mousedown',start);
-  canvas.addEventListener('mousemove',move);
-  canvas.addEventListener('mouseup',end);
-
-  canvas.addEventListener('touchstart',start,{passive:false});
-  canvas.addEventListener('touchmove',move,{passive:false});
-  canvas.addEventListener('touchend',end);
+  return {
+    x:e.clientX-rect.left,
+    y:e.clientY-rect.top
+  };
 }
 
-function clearSign(){
-  if(!ctx)return;
+function startDrawing(e){
+
+  drawing=true;
+  signed=true;
+
+  document.getElementById("continueBtn").disabled=false;
+
+  const pos=getPosition(e);
+
+  ctx.beginPath();
+  ctx.moveTo(pos.x,pos.y);
+
+  e.preventDefault();
+}
+
+function draw(e){
+
+  if(!drawing)return;
+
+  const pos=getPosition(e);
+
+  ctx.lineTo(pos.x,pos.y);
+  ctx.stroke();
+
+  e.preventDefault();
+}
+
+function stopDrawing(){
+  drawing=false;
+}
+
+canvas.addEventListener("mousedown",startDrawing);
+canvas.addEventListener("mousemove",draw);
+canvas.addEventListener("mouseup",stopDrawing);
+canvas.addEventListener("mouseleave",stopDrawing);
+
+canvas.addEventListener("touchstart",startDrawing,{passive:false});
+canvas.addEventListener("touchmove",draw,{passive:false});
+canvas.addEventListener("touchend",stopDrawing);
+
+
+function clearSignature(){
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   signed=false;
 
-  document.getElementById('continueBtn').disabled=true;
-  document.getElementById('continueBtn').innerText="🔒 Sign करके आगे बढ़ें";
+  document.getElementById("continueBtn").disabled=true;
 }
 
+
 /* PHOTOS */
+
 const photos=[
-"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
-"https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80",
-"https://images.unsplash.com/photo-1518621012118-6b7d6e9b4b0b?auto=format&fit=crop&w=700&q=80"
+  {
+    url:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
+    text:"Some memories just feel different. ❤️"
+  },
+  {
+    url:"https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80",
+    text:"The little moments are sometimes the best ones. ✨"
+  },
+  {
+    url:"https://images.unsplash.com/photo-1518621012118-6b7d6e9b4b0b?auto=format&fit=crop&w=900&q=80",
+    text:"And this is only the beginning... 💕"
+  }
 ];
 
 let photoIndex=0;
 
-function goPhotos(){
-  show('s4');
+function loadPhoto(){
+
+  document.getElementById("photo").src=photos[photoIndex].url;
+
+  document.getElementById("caption").textContent=
+    photos[photoIndex].text;
 }
+
+loadPhoto();
+
 
 function nextPhoto(){
 
   photoIndex++;
 
   if(photoIndex>=photos.length){
-    show('s5');
+
+    showScreen("s5");
+
     return;
   }
 
-  document.getElementById('photo').src=photos[photoIndex];
-
-  document.getElementById('dots').innerText=
-    photos.map((x,i)=>i===photoIndex?"●":"○").join(" ");
+  loadPhoto();
 }
 
 </script>
 
 </body>
-  </html>
+          </html>
