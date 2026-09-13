@@ -3,253 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yours Abhi ❤️</title>
+<title>Your Surprise ❤️</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: radial-gradient(circle at top, #302044, #100d18 45%, #07070c);
-  color: white;
-  min-height: 100vh;
-  overflow-x: hidden;
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#ffe4ef,#eee4ff);
+  min-height:100vh;
+  color:#222;
+  overflow-x:hidden;
 }
 
-.screen {
-  display: none;
-  min-height: 100vh;
-  padding: 25px 18px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
+.screen{
+  display:none;
+  min-height:100vh;
+  width:100%;
+  padding:25px 18px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
-.screen.active {
-  display: flex;
+.screen.active{
+  display:flex;
 }
 
-.card {
-  width: 100%;
-  max-width: 500px;
-  padding: 28px 22px;
-  border-radius: 28px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  box-shadow: 0 25px 80px rgba(0,0,0,.45);
-  backdrop-filter: blur(18px);
+.card{
+  width:100%;
+  max-width:520px;
+  background:rgba(255,255,255,.95);
+  border-radius:25px;
+  padding:30px 20px;
+  box-shadow:0 15px 45px rgba(0,0,0,.15);
 }
 
-h1 {
-  font-size: 32px;
-  margin-bottom: 12px;
+h1{
+  font-size:30px;
+  margin-bottom:15px;
 }
 
-h2 {
-  font-size: 25px;
-  margin-bottom: 15px;
+p{
+  font-size:17px;
+  line-height:1.6;
+  margin-bottom:20px;
 }
 
-p {
-  color: #d8d5df;
-  line-height: 1.6;
+button{
+  border:0;
+  border-radius:30px;
+  padding:14px 24px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff4f91,#9b5cff);
+  color:white;
+  box-shadow:0 8px 20px rgba(155,92,255,.25);
 }
 
-button {
-  border: 0;
-  padding: 14px 25px;
-  border-radius: 50px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-  background: linear-gradient(135deg, #ff4f9a, #9b5cff);
-  box-shadow: 0 10px 30px rgba(255,79,154,.3);
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
-button:disabled {
-  opacity: .35;
-  cursor: not-allowed;
+/* ENVELOPE */
+
+.envelope-area{
+  margin:25px auto;
+  width:270px;
+  height:190px;
+  position:relative;
+  perspective:800px;
 }
 
-/* Envelope */
-
-.envelope {
-  width: 230px;
-  height: 155px;
-  position: relative;
-  margin: 25px auto 30px;
-  cursor: pointer;
-  perspective: 800px;
+.envelope{
+  position:absolute;
+  width:100%;
+  height:150px;
+  bottom:0;
+  background:#ff75a9;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+  overflow:hidden;
 }
 
-.env-body {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #ff4f91, #8f55ff);
-  border-radius: 10px;
-  box-shadow: 0 20px 45px rgba(0,0,0,.4);
+.envelope:before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  border-left:135px solid transparent;
+  border-right:135px solid transparent;
+  border-bottom:100px solid #ff4f91;
+  z-index:2;
 }
 
-.env-flap {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-left: 115px solid transparent;
-  border-right: 115px solid transparent;
-  border-top: 80px solid #ff75a9;
-  transform-origin: top;
-  transition: .8s;
-  z-index: 3;
+.flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  border-left:135px solid transparent;
+  border-right:135px solid transparent;
+  border-top:105px solid #d94d91;
+  transform-origin:top center;
+  transition:transform 1s ease;
+  z-index:4;
 }
 
-.envelope.open .env-flap {
-  transform: rotateX(180deg);
+.heart{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:58px;
+  transform:translateX(-50%);
+  font-size:40px;
+  transition:.5s;
 }
 
-.heart {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  font-size: 45px;
+.welcome{
+  position:absolute;
+  z-index:3;
+  width:100%;
+  top:18px;
+  font-size:22px;
+  font-weight:bold;
+  color:white;
 }
 
-.welcome {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  font-size: 25px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: white;
-  opacity: 0;
-  transition: 1s;
+.envelope.open .flap{
+  transform:rotateX(180deg);
 }
 
-.envelope.open .welcome {
-  opacity: 1;
-  transform: translate(-50%,-70%);
+.envelope.open .heart{
+  transform:translateX(-50%) translateY(-55px);
+  opacity:0;
 }
 
-/* Conditions */
+/* CONDITIONS */
 
-.conditions {
-  text-align: left;
-  margin-top: 20px;
+.conditions{
+  text-align:left;
+  margin:20px 0;
 }
 
-.condition {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 14px;
-  margin: 10px 0;
-  border-radius: 16px;
-  background: rgba(255,255,255,.06);
+.condition{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:13px;
+  margin-bottom:10px;
+  background:#fff0f6;
+  border-radius:14px;
 }
 
-.condition input {
-  width: 20px;
-  height: 20px;
-  accent-color: #ff4f9a;
-  margin-top: 2px;
-  flex-shrink: 0;
+.condition input{
+  width:20px;
+  height:20px;
+  margin-top:2px;
+  accent-color:#ff4f91;
 }
 
-.condition label {
-  color: #eee;
-  line-height: 1.4;
+/* SIGNATURE */
+
+.signature-instruction{
+  font-weight:bold;
+  color:#111;
+  margin-bottom:10px;
 }
 
-/* Signature */
-
-#signatureCanvas {
-  display: block;
-  width: 100%;
-  height: 220px;
-  background: white;
-  border-radius: 18px;
-  margin-top: 20px;
-
-  /* Important for mobile drawing */
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
+.canvas-wrap{
+  width:100%;
+  max-width:460px;
+  margin:0 auto 15px;
+  background:white;
+  border:3px solid #222;
+  border-radius:15px;
+  overflow:hidden;
 }
 
-.clear {
-  background: rgba(255,255,255,.12);
-  box-shadow: none;
+#signatureCanvas{
+  display:block;
+  width:100%;
+  height:220px;
+  background:#fff;
+  touch-action:none;
+  cursor:crosshair;
 }
 
-/* Photos */
-
-.photo-box {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: 22px;
-  overflow: hidden;
-  margin-top: 20px;
-  background: #111;
+.clear-btn{
+  background:#222;
+  margin-bottom:15px;
 }
 
-.photo-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.note{
+  font-size:14px;
+  font-weight:bold;
+  color:#444;
+  margin-top:10px;
 }
 
-.caption {
-  margin-top: 15px;
-  font-size: 17px;
-  color: #fff;
+/* PHOTO */
+
+.photo{
+  width:100%;
+  border-radius:18px;
+  margin:15px 0;
+  display:block;
 }
 
-/* Final */
-
-.final-heart {
-  font-size: 80px;
-  animation: pulse 1.3s infinite;
+.caption{
+  font-weight:bold;
+  font-size:18px;
 }
 
-@keyframes pulse {
-  50% {
-    transform: scale(1.15);
-  }
-}
+/* MOBILE */
 
-.small {
-  font-size: 13px;
-  color: #aaa;
-  margin-top: 15px;
-}
-
-.fade {
-  animation: fade .7s ease;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
+@media(max-width:480px){
+  h1{
+    font-size:26px;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .card{
+    padding:25px 16px;
+  }
+
+  .envelope-area{
+    transform:scale(.9);
+  }
+
+  #signatureCanvas{
+    height:200px;
   }
 }
 </style>
@@ -259,176 +249,172 @@ button:disabled {
 
 <!-- SCREEN 1 -->
 
-<section id="s1" class="screen active">
+<section class="screen active" id="screen1">
+  <div class="card">
 
-  <div class="card fade">
-
-    <div class="envelope" id="envelope" onclick="openEnvelope()">
-
-      <div class="env-body"></div>
-
-      <div class="welcome">
-        WELCOME
-      </div>
-
-      <div class="env-flap"></div>
-
-      <div class="heart">
-        ❤️
-      </div>
-
-    </div>
-
-    <h1>Yours Abhi</h1>
+    <h1>Yours Abhi ❤️</h1>
 
     <p>
       Someone has prepared something special for you.
     </p>
 
-    <button onclick="openEnvelope()">
+    <div class="envelope-area">
+
+      <div class="envelope" id="envelope">
+
+        <div class="welcome">WELCOME</div>
+
+        <div class="flap"></div>
+
+        <div class="heart">❤️</div>
+
+      </div>
+
+    </div>
+
+    <button type="button" onclick="openSurprise()">
       Open My Surprise 💌
     </button>
 
   </div>
-
 </section>
 
 
 <!-- SCREEN 2 -->
 
-<section id="s2" class="screen">
+<section class="screen" id="screen2">
+  <div class="card">
 
-  <div class="card fade">
-
-    <h2>One Little Agreement 💗</h2>
+    <h1>One Little Agreement 💗</h1>
 
     <p>
-      Before we continue, there are a few little conditions.
-      Read them carefully and agree to all of them.
+      Before we continue, agree to these little conditions.
     </p>
 
     <div class="conditions">
 
-      <div class="condition">
-        <input type="checkbox" class="agree">
-        <label>
-          You will always share your problems with me.
-        </label>
-      </div>
+      <label class="condition">
+        <input type="checkbox" class="agreement">
+        <span>You will always share your problems with me.</span>
+      </label>
 
-      <div class="condition">
-        <input type="checkbox" class="agree">
-        <label>
-          You will always stay with me in all conditions.
-        </label>
-      </div>
+      <label class="condition">
+        <input type="checkbox" class="agreement">
+        <span>You will always stay with me in all conditions.</span>
+      </label>
 
-      <div class="condition">
-        <input type="checkbox" class="agree">
-        <label>
-          You will never judge me, will try to understand.
-        </label>
-      </div>
+      <label class="condition">
+        <input type="checkbox" class="agreement">
+        <span>You will never judge me, will try to understand.</span>
+      </label>
 
-      <div class="condition">
-        <input type="checkbox" class="agree">
-        <label>
-          Always be happy.
-        </label>
-      </div>
+      <label class="condition">
+        <input type="checkbox" class="agreement">
+        <span>Always be happy.</span>
+      </label>
 
     </div>
 
-    <button id="agreeBtn" disabled onclick="showScreen('s3')">
+    <button
+      type="button"
+      id="agreeButton"
+      onclick="goToSignature()"
+      disabled>
       Agree & Continue →
     </button>
 
   </div>
-
 </section>
 
 
 <!-- SCREEN 3 -->
 
-<section id="s3" class="screen">
+<section class="screen" id="screen3">
+  <div class="card">
 
-  <div class="card fade">
-
-    <h2>Your Signature ✍️</h2>
+    <h1>Your Signature ✍️</h1>
 
     <p>
       Sign below to unlock the next part of the surprise.
     </p>
 
-    <canvas id="signatureCanvas"></canvas>
-
-    <button class="clear" onclick="clearSignature()">
-      Clear
-    </button>
-
-    <p class="small">
-      Take a screenshot of your signature and share it with Abhiranjan ❤️
+    <p class="signature-instruction">
+      Please sign using black colour.
     </p>
 
-    <button id="continueBtn" disabled onclick="showScreen('s4')">
+    <div class="canvas-wrap">
+      <canvas id="signatureCanvas"></canvas>
+    </div>
+
+    <button
+      type="button"
+      class="clear-btn"
+      onclick="clearSignature()">
+      Clear Signature
+    </button>
+
+    <br>
+
+    <button
+      type="button"
+      id="signatureButton"
+      onclick="goToPhotos()"
+      disabled>
       Continue →
     </button>
 
-  </div>
+    <p class="note">
+      Take a screenshot of your signature and share it with Abhiranjan ❤️
+    </p>
 
+  </div>
 </section>
 
 
 <!-- SCREEN 4 -->
 
-<section id="s4" class="screen">
+<section class="screen" id="screen4">
+  <div class="card">
 
-  <div class="card fade">
-
-    <h2>Angel's look</h2>
+    <h1>Angel's look</h1>
 
     <p>
       Some moments are worth keeping forever.
     </p>
 
-    <div class="photo-box">
-      <img id="photo" src="" alt="Memory">
-    </div>
+    <img
+      class="photo"
+      src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80"
+      alt="Beautiful memory">
 
-    <div class="caption" id="caption"></div>
+    <p class="caption">
+      Some memories just feel different. ❤️
+    </p>
 
-    <button onclick="nextPhoto()">
+    <button type="button" onclick="nextMemory()">
       Next Memory →
     </button>
 
   </div>
-
 </section>
 
 
 <!-- SCREEN 5 -->
 
-<section id="s5" class="screen">
+<section class="screen" id="screen5">
+  <div class="card">
 
-  <div class="card fade">
-
-    <div class="final-heart">
-      ❤️
-    </div>
-
-    <h1>That's It...</h1>
+    <h1>That's It... ✨</h1>
 
     <p>
-      But maybe this little surprise becomes
-      one of your favourite memories. ✨
+      But maybe this little surprise becomes one of your favourite memories.
     </p>
 
-    <button onclick="location.reload()">
+    <button type="button" onclick="restartExperience()">
       Experience Again ↻
     </button>
 
   </div>
-
 </section>
 
 
@@ -436,120 +422,138 @@ button:disabled {
 
 /* SCREEN CONTROL */
 
-function showScreen(id) {
+function showScreen(number){
 
-  document.querySelectorAll(".screen").forEach(function(screen) {
+  document.querySelectorAll(".screen").forEach(function(screen){
     screen.classList.remove("active");
   });
 
-  document.getElementById(id).classList.add("active");
+  document.getElementById("screen" + number)
+    .classList.add("active");
 
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
-
-  /* Recalculate signature canvas when it becomes visible */
-  if (id === "s3") {
-    setTimeout(function() {
-      setupCanvas();
-    }, 100);
-  }
 }
 
 
-/* ENVELOPE */
+/* OPEN ENVELOPE */
 
-let envelopeOpened = false;
+function openSurprise(){
 
-function openEnvelope() {
-
-  if (envelopeOpened) return;
-
-  envelopeOpened = true;
-
-  const envelope = document.getElementById("envelope");
+  var envelope = document.getElementById("envelope");
 
   envelope.classList.add("open");
 
-  setTimeout(function() {
-    showScreen("s2");
-  }, 1200);
+  setTimeout(function(){
+    showScreen(2);
+  },1000);
 }
 
 
-/* CONDITIONS */
+/* AGREEMENT CHECK */
 
-const checkboxes = document.querySelectorAll(".agree");
-const agreeBtn = document.getElementById("agreeBtn");
+var agreementBoxes =
+  document.querySelectorAll(".agreement");
 
-checkboxes.forEach(function(box) {
+function checkConditions(){
 
-  box.addEventListener("change", function() {
+  var allChecked = true;
 
-    const allChecked =
-      Array.from(checkboxes).every(function(item) {
-        return item.checked;
-      });
+  agreementBoxes.forEach(function(box){
 
-    agreeBtn.disabled = !allChecked;
+    if(!box.checked){
+      allChecked = false;
+    }
 
   });
+
+  document.getElementById("agreeButton").disabled =
+    !allChecked;
+}
+
+
+agreementBoxes.forEach(function(box){
+
+  box.addEventListener("change",checkConditions);
 
 });
 
 
-/* SIGNATURE */
+/* GO TO SIGNATURE */
 
-const canvas = document.getElementById("signatureCanvas");
-const ctx = canvas.getContext("2d");
+function goToSignature(){
 
-let drawing = false;
-let hasDrawn = false;
-let startX = 0;
-let startY = 0;
+  showScreen(3);
+
+  setTimeout(function(){
+    setupCanvas();
+  },100);
+
+}
 
 
-/* Prepare high quality canvas */
+/* SIGNATURE CANVAS */
 
-function setupCanvas() {
+var canvas =
+  document.getElementById("signatureCanvas");
 
-  const rect = canvas.getBoundingClientRect();
+var ctx =
+  canvas.getContext("2d");
 
-  if (rect.width === 0 || rect.height === 0) {
-    return;
-  }
+var drawing = false;
+var hasSignature = false;
 
-  const dpr = window.devicePixelRatio || 1;
 
-  canvas.width = Math.round(rect.width * dpr);
-  canvas.height = Math.round(rect.height * dpr);
+/* CANVAS SIZE */
 
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+function setupCanvas(){
+
+  var rect = canvas.getBoundingClientRect();
+
+  var dpr = window.devicePixelRatio || 1;
+
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
 
   ctx.lineWidth = 3;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-  ctx.strokeStyle = "#111";
+
+  /* BLACK SIGNATURE */
+
+  ctx.strokeStyle = "#000000";
+
 }
 
 
-/* Get exact finger position */
+/* GET POINTER POSITION */
 
-function getPoint(event) {
+function getPosition(event){
 
-  const rect = canvas.getBoundingClientRect();
+  var rect = canvas.getBoundingClientRect();
 
   return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top
+    x:event.clientX - rect.left,
+    y:event.clientY - rect.top
   };
+
 }
 
 
-/* Finger touches canvas */
+/* START DRAWING */
 
-canvas.addEventListener("pointerdown", function(event) {
+canvas.addEventListener("pointerdown",function(event){
 
   event.preventDefault();
 
@@ -557,42 +561,152 @@ canvas.addEventListener("pointerdown", function(event) {
 
   canvas.setPointerCapture(event.pointerId);
 
-  const point = getPoint(event);
-
-  startX = point.x;
-  startY = point.y;
+  var pos = getPosition(event);
 
   ctx.beginPath();
-  ctx.moveTo(point.x, point.y);
+
+  ctx.moveTo(
+    pos.x,
+    pos.y
+  );
 
 });
 
 
-/* Finger moves */
+/* DRAW */
 
-canvas.addEventListener("pointermove", function(event) {
+canvas.addEventListener("pointermove",function(event){
 
-  if (!drawing) return;
+  if(!drawing){
+    return;
+  }
 
   event.preventDefault();
 
-  const point = getPoint(event);
+  var pos = getPosition(event);
 
-  /*
-    Only count it as a signature when
-    the finger actually moves.
-  */
-
-  const distance = Math.sqrt(
-    Math.pow(point.x - startX, 2) +
-    Math.pow(point.y - startY, 2)
+  ctx.lineTo(
+    pos.x,
+    pos.y
   );
 
-  if (distance > 2) {
+  ctx.stroke();
 
-    ctx.lineTo(point.x, point.y);
-    ctx.stroke();
+  hasSignature = true;
 
-    hasDrawn = true;
+  document.getElementById("signatureButton")
+    .disabled = false;
 
-    document.getElementById("
+});
+
+
+/* STOP DRAWING */
+
+function stopDrawing(){
+
+  drawing = false;
+
+  ctx.closePath();
+
+}
+
+canvas.addEventListener(
+  "pointerup",
+  stopDrawing
+);
+
+canvas.addEventListener(
+  "pointercancel",
+  stopDrawing
+);
+
+canvas.addEventListener(
+  "pointerleave",
+  stopDrawing
+);
+
+
+/* CLEAR SIGNATURE */
+
+function clearSignature(){
+
+  var rect = canvas.getBoundingClientRect();
+
+  ctx.clearRect(
+    0,
+    0,
+    rect.width,
+    rect.height
+  );
+
+  hasSignature = false;
+
+  document.getElementById("signatureButton")
+    .disabled = true;
+
+  setupCanvas();
+
+}
+
+
+/* GO TO PHOTO */
+
+function goToPhotos(){
+
+  if(!hasSignature){
+    return;
+  }
+
+  showScreen(4);
+
+}
+
+
+/* NEXT MEMORY */
+
+function nextMemory(){
+
+  showScreen(5);
+
+}
+
+
+/* RESTART */
+
+function restartExperience(){
+
+  document.querySelectorAll(".agreement")
+    .forEach(function(box){
+      box.checked = false;
+    });
+
+  document.getElementById("agreeButton")
+    .disabled = true;
+
+  clearSignature();
+
+  document.getElementById("envelope")
+    .classList.remove("open");
+
+  showScreen(1);
+
+}
+
+
+/* RESIZE */
+
+window.addEventListener("resize",function(){
+
+  if(document.getElementById("screen3")
+    .classList.contains("active")){
+
+    setupCanvas();
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
