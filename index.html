@@ -6,247 +6,250 @@
 <title>Yours Abhi ❤️</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:radial-gradient(circle at top,#302044,#100d18 45%,#07070c);
-  color:white;
-  min-height:100vh;
-  overflow-x:hidden;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #302044, #100d18 45%, #07070c);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.screen{
-  display:none;
-  min-height:100vh;
-  padding:25px 18px;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 25px 18px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
-.screen.active{
-  display:flex;
+.screen.active {
+  display: flex;
 }
 
-.card{
-  width:100%;
-  max-width:500px;
-  padding:28px 22px;
-  border-radius:28px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 25px 80px rgba(0,0,0,.45);
-  backdrop-filter:blur(18px);
+.card {
+  width: 100%;
+  max-width: 500px;
+  padding: 28px 22px;
+  border-radius: 28px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 25px 80px rgba(0,0,0,.45);
+  backdrop-filter: blur(18px);
 }
 
-h1{
-  font-size:32px;
-  margin-bottom:12px;
+h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
 }
 
-h2{
-  font-size:25px;
-  margin-bottom:15px;
+h2 {
+  font-size: 25px;
+  margin-bottom: 15px;
 }
 
-p{
-  color:#d8d5df;
-  line-height:1.6;
+p {
+  color: #d8d5df;
+  line-height: 1.6;
 }
 
-button{
-  border:0;
-  padding:14px 25px;
-  border-radius:50px;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:20px;
-  background:linear-gradient(135deg,#ff4f9a,#9b5cff);
-  box-shadow:0 10px 30px rgba(255,79,154,.3);
+button {
+  border: 0;
+  padding: 14px 25px;
+  border-radius: 50px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #ff4f9a, #9b5cff);
+  box-shadow: 0 10px 30px rgba(255,79,154,.3);
 }
 
-button:disabled{
-  opacity:.35;
-  cursor:not-allowed;
+button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
 }
 
 /* Envelope */
 
-.envelope{
-  width:230px;
-  height:155px;
-  position:relative;
-  margin:25px auto 30px;
-  cursor:pointer;
-  perspective:800px;
+.envelope {
+  width: 230px;
+  height: 155px;
+  position: relative;
+  margin: 25px auto 30px;
+  cursor: pointer;
+  perspective: 800px;
 }
 
-.env-body{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,#ff4f91,#8f55ff);
-  border-radius:10px;
-  box-shadow:0 20px 45px rgba(0,0,0,.4);
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff4f91, #8f55ff);
+  border-radius: 10px;
+  box-shadow: 0 20px 45px rgba(0,0,0,.4);
 }
 
-.env-flap{
-  position:absolute;
-  left:0;
-  top:0;
-  width:0;
-  height:0;
-  border-left:115px solid transparent;
-  border-right:115px solid transparent;
-  border-top:80px solid #ff75a9;
-  transform-origin:top;
-  transition:.8s;
-  z-index:3;
+.env-flap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-left: 115px solid transparent;
+  border-right: 115px solid transparent;
+  border-top: 80px solid #ff75a9;
+  transform-origin: top;
+  transition: .8s;
+  z-index: 3;
 }
 
-.envelope.open .env-flap{
-  transform:rotateX(180deg);
+.envelope.open .env-flap {
+  transform: rotateX(180deg);
 }
 
-.heart{
-  position:absolute;
-  z-index:5;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:45px;
+.heart {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 45px;
 }
 
-/* Welcome inside envelope */
-
-.welcome{
-  position:absolute;
-  z-index:2;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:25px;
-  font-weight:bold;
-  letter-spacing:3px;
-  color:white;
-  opacity:0;
-  transition:1s;
+.welcome {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: white;
+  opacity: 0;
+  transition: 1s;
 }
 
-.envelope.open .welcome{
-  opacity:1;
-  transform:translate(-50%,-70%);
+.envelope.open .welcome {
+  opacity: 1;
+  transform: translate(-50%,-70%);
 }
 
 /* Conditions */
 
-.conditions{
-  text-align:left;
-  margin-top:20px;
+.conditions {
+  text-align: left;
+  margin-top: 20px;
 }
 
-.condition{
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-  padding:14px;
-  margin:10px 0;
-  border-radius:16px;
-  background:rgba(255,255,255,.06);
+.condition {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 16px;
+  background: rgba(255,255,255,.06);
 }
 
-.condition input{
-  width:20px;
-  height:20px;
-  accent-color:#ff4f9a;
-  margin-top:2px;
+.condition input {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff4f9a;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
-.condition label{
-  color:#eee;
-  line-height:1.4;
+.condition label {
+  color: #eee;
+  line-height: 1.4;
 }
 
 /* Signature */
 
-#signatureCanvas{
-  display:block;
-  width:100%;
-  height:220px;
-  background:#fff;
-  border-radius:18px;
-  margin-top:20px;
-  touch-action:none;
-  -webkit-user-select:none;
-  user-select:none;
+#signatureCanvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  background: white;
+  border-radius: 18px;
+  margin-top: 20px;
+
+  /* Important for mobile drawing */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
-.clear{
-  background:rgba(255,255,255,.12);
-  box-shadow:none;
+.clear {
+  background: rgba(255,255,255,.12);
+  box-shadow: none;
 }
 
 /* Photos */
 
-.photo-box{
-  width:100%;
-  aspect-ratio:4/5;
-  border-radius:22px;
-  overflow:hidden;
-  margin-top:20px;
-  background:#111;
+.photo-box {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  overflow: hidden;
+  margin-top: 20px;
+  background: #111;
 }
 
-.photo-box img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.caption{
-  margin-top:15px;
-  font-size:17px;
-  color:#fff;
+.caption {
+  margin-top: 15px;
+  font-size: 17px;
+  color: #fff;
 }
 
 /* Final */
 
-.final-heart{
-  font-size:80px;
-  animation:pulse 1.3s infinite;
+.final-heart {
+  font-size: 80px;
+  animation: pulse 1.3s infinite;
 }
 
-@keyframes pulse{
-  50%{
-    transform:scale(1.15);
+@keyframes pulse {
+  50% {
+    transform: scale(1.15);
   }
 }
 
-.small{
-  font-size:13px;
-  color:#aaa;
-  margin-top:15px;
+.small {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 15px;
 }
 
-.fade{
-  animation:fade .7s ease;
+.fade {
+  animation: fade .7s ease;
 }
 
-@keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(15px);
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
   }
-  to{
-    opacity:1;
-    transform:translateY(0);
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
@@ -255,7 +258,9 @@ button:disabled{
 <body>
 
 <!-- SCREEN 1 -->
+
 <section id="s1" class="screen active">
+
   <div class="card fade">
 
     <div class="envelope" id="envelope" onclick="openEnvelope()">
@@ -285,10 +290,12 @@ button:disabled{
     </button>
 
   </div>
+
 </section>
 
 
 <!-- SCREEN 2 -->
+
 <section id="s2" class="screen">
 
   <div class="card fade">
@@ -319,7 +326,7 @@ button:disabled{
       <div class="condition">
         <input type="checkbox" class="agree">
         <label>
-          You will never judge me, you will try to understand.
+          You will never judge me, will try to understand.
         </label>
       </div>
 
@@ -342,6 +349,7 @@ button:disabled{
 
 
 <!-- SCREEN 3 -->
+
 <section id="s3" class="screen">
 
   <div class="card fade">
@@ -372,6 +380,7 @@ button:disabled{
 
 
 <!-- SCREEN 4 -->
+
 <section id="s4" class="screen">
 
   <div class="card fade">
@@ -398,6 +407,7 @@ button:disabled{
 
 
 <!-- SCREEN 5 -->
+
 <section id="s5" class="screen">
 
   <div class="card fade">
@@ -426,54 +436,63 @@ button:disabled{
 
 /* SCREEN CONTROL */
 
-function showScreen(id){
+function showScreen(id) {
 
-  document.querySelectorAll(".screen").forEach(screen=>{
+  document.querySelectorAll(".screen").forEach(function(screen) {
     screen.classList.remove("active");
   });
 
   document.getElementById(id).classList.add("active");
 
   window.scrollTo({
-    top:0,
-    behavior:"smooth"
+    top: 0,
+    behavior: "smooth"
   });
+
+  /* Recalculate signature canvas when it becomes visible */
+  if (id === "s3") {
+    setTimeout(function() {
+      setupCanvas();
+    }, 100);
+  }
 }
 
 
 /* ENVELOPE */
 
-let envelopeOpened=false;
+let envelopeOpened = false;
 
-function openEnvelope(){
+function openEnvelope() {
 
-  if(envelopeOpened) return;
+  if (envelopeOpened) return;
 
-  envelopeOpened=true;
+  envelopeOpened = true;
 
-  const envelope=document.getElementById("envelope");
+  const envelope = document.getElementById("envelope");
 
   envelope.classList.add("open");
 
-  setTimeout(()=>{
+  setTimeout(function() {
     showScreen("s2");
-  },1200);
+  }, 1200);
 }
 
 
 /* CONDITIONS */
 
-const checkboxes=document.querySelectorAll(".agree");
-const agreeBtn=document.getElementById("agreeBtn");
+const checkboxes = document.querySelectorAll(".agree");
+const agreeBtn = document.getElementById("agreeBtn");
 
-checkboxes.forEach(box=>{
+checkboxes.forEach(function(box) {
 
-  box.addEventListener("change",()=>{
+  box.addEventListener("change", function() {
 
-    const allChecked=
-      [...checkboxes].every(item=>item.checked);
+    const allChecked =
+      Array.from(checkboxes).every(function(item) {
+        return item.checked;
+      });
 
-    agreeBtn.disabled=!allChecked;
+    agreeBtn.disabled = !allChecked;
 
   });
 
@@ -482,186 +501,98 @@ checkboxes.forEach(box=>{
 
 /* SIGNATURE */
 
-const canvas=document.getElementById("signatureCanvas");
-const ctx=canvas.getContext("2d");
+const canvas = document.getElementById("signatureCanvas");
+const ctx = canvas.getContext("2d");
 
-let drawing=false;
-let signed=false;
-
-function setupCanvas(){
-
-  const rect=canvas.getBoundingClientRect();
-
-  const ratio=window.devicePixelRatio || 1;
-
-  canvas.width=rect.width*ratio;
-  canvas.height=rect.height*ratio;
-
-  ctx.setTransform(ratio,0,0,ratio,0,0);
-
-  ctx.lineWidth=3;
-  ctx.lineCap="round";
-  ctx.lineJoin="round";
-  ctx.strokeStyle="#111";
-}
-
-setupCanvas();
+let drawing = false;
+let hasDrawn = false;
+let startX = 0;
+let startY = 0;
 
 
-function getPosition(event){
+/* Prepare high quality canvas */
 
-  const rect=canvas.getBoundingClientRect();
+function setupCanvas() {
 
-  let clientX;
-  let clientY;
+  const rect = canvas.getBoundingClientRect();
 
-  if(event.touches && event.touches.length>0){
-
-    clientX=event.touches[0].clientX;
-    clientY=event.touches[0].clientY;
-
-  }else{
-
-    clientX=event.clientX;
-    clientY=event.clientY;
-
+  if (rect.width === 0 || rect.height === 0) {
+    return;
   }
 
+  const dpr = window.devicePixelRatio || 1;
+
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "#111";
+}
+
+
+/* Get exact finger position */
+
+function getPoint(event) {
+
+  const rect = canvas.getBoundingClientRect();
+
   return {
-    x:clientX-rect.left,
-    y:clientY-rect.top
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
   };
 }
 
 
-function startDrawing(event){
+/* Finger touches canvas */
+
+canvas.addEventListener("pointerdown", function(event) {
 
   event.preventDefault();
 
-  drawing=true;
-  signed=true;
+  drawing = true;
 
-  document.getElementById("continueBtn").disabled=false;
+  canvas.setPointerCapture(event.pointerId);
 
-  const pos=getPosition(event);
+  const point = getPoint(event);
+
+  startX = point.x;
+  startY = point.y;
 
   ctx.beginPath();
-  ctx.moveTo(pos.x,pos.y);
-}
+  ctx.moveTo(point.x, point.y);
+
+});
 
 
-function draw(event){
+/* Finger moves */
 
-  if(!drawing) return;
+canvas.addEventListener("pointermove", function(event) {
+
+  if (!drawing) return;
 
   event.preventDefault();
 
-  const pos=getPosition(event);
+  const point = getPoint(event);
 
-  ctx.lineTo(pos.x,pos.y);
-  ctx.stroke();
-}
+  /*
+    Only count it as a signature when
+    the finger actually moves.
+  */
 
-
-function stopDrawing(event){
-
-  if(event) event.preventDefault();
-
-  drawing=false;
-}
-
-
-canvas.addEventListener(
-  "pointerdown",
-  startDrawing
-);
-
-canvas.addEventListener(
-  "pointermove",
-  draw
-);
-
-canvas.addEventListener(
-  "pointerup",
-  stopDrawing
-);
-
-canvas.addEventListener(
-  "pointercancel",
-  stopDrawing
-);
-
-canvas.addEventListener(
-  "pointerleave",
-  stopDrawing
-);
-
-
-function clearSignature(){
-
-  ctx.clearRect(
-    0,
-    0,
-    canvas.clientWidth,
-    canvas.clientHeight
+  const distance = Math.sqrt(
+    Math.pow(point.x - startX, 2) +
+    Math.pow(point.y - startY, 2)
   );
 
-  signed=false;
+  if (distance > 2) {
 
-  document.getElementById("continueBtn").disabled=true;
-}
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
 
+    hasDrawn = true;
 
-/* PHOTOS */
-
-const photos=[
-
-  {
-    url:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
-    text:"Some memories just feel different. ❤️"
-  },
-
-  {
-    url:"https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80",
-    text:"The little moments are sometimes the best ones. ✨"
-  },
-
-  {
-    url:"https://images.unsplash.com/photo-1518621012118-6b7d6e9b4b0b?auto=format&fit=crop&w=900&q=80",
-    text:"And this is only the beginning... 💕"
-  }
-
-];
-
-let photoIndex=0;
-
-function loadPhoto(){
-
-  document.getElementById("photo").src=
-    photos[photoIndex].url;
-
-  document.getElementById("caption").textContent=
-    photos[photoIndex].text;
-}
-
-loadPhoto();
-
-
-function nextPhoto(){
-
-  photoIndex++;
-
-  if(photoIndex>=photos.length){
-
-    showScreen("s5");
-
-    return;
-  }
-
-  loadPhoto();
-}
-
-</script>
-
-</body>
-</html>
+    document.getElementById("
