@@ -37,7 +37,7 @@ body{
 .card{
   width:100%;
   max-width:520px;
-  background:rgba(255,255,255,.95);
+  background:rgba(255,255,255,.96);
   border-radius:25px;
   padding:30px 20px;
   box-shadow:0 15px 45px rgba(0,0,0,.15);
@@ -209,23 +209,151 @@ button:disabled{
   margin-top:10px;
 }
 
-/* PHOTO */
+/* GALLERY */
 
-.photo{
+.gallery-area{
+  position:relative;
   width:100%;
+  margin:20px auto;
+}
+
+.gallery-frame{
+  width:100%;
+  height:420px;
+  background:#f5f5f5;
   border-radius:18px;
-  margin:15px 0;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.gallery-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+.gallery-frame img.active{
   display:block;
 }
 
-.caption{
+.gallery-empty{
+  padding:25px;
+  font-size:16px;
+  line-height:1.6;
+  color:#555;
+}
+
+.gallery-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:12px;
+}
+
+.gallery-arrow{
+  width:48px;
+  height:48px;
+  padding:0;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.gallery-count{
   font-weight:bold;
-  font-size:18px;
+  font-size:15px;
+}
+
+.upload-box{
+  margin:20px 0;
+  padding:18px;
+  background:#fff0f6;
+  border-radius:16px;
+}
+
+.upload-label{
+  display:inline-block;
+  border:0;
+  border-radius:30px;
+  padding:14px 22px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff4f91,#9b5cff);
+  color:white;
+  box-shadow:0 8px 20px rgba(155,92,255,.25);
+}
+
+#photoInput{
+  display:none;
+}
+
+.upload-status{
+  margin-top:12px;
+  font-size:14px;
+  font-weight:bold;
+  color:#444;
+}
+
+.upload-note{
+  margin-top:8px;
+  margin-bottom:0;
+  font-size:13px;
+  color:#555;
+}
+
+/* NOTES */
+
+.notes-card{
+  text-align:left;
+}
+
+.notes-card h1{
+  text-align:center;
+}
+
+.notes-card p{
+  text-align:left;
+  margin-bottom:22px;
+}
+
+/* FINAL CONFETTI */
+
+#confettiContainer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.confetti{
+  position:absolute;
+  top:-30px;
+  width:9px;
+  height:18px;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  0%{
+    transform:translateY(-40px) rotate(0deg);
+    opacity:1;
+  }
+
+  100%{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:.9;
+  }
 }
 
 /* MOBILE */
 
 @media(max-width:480px){
+
   h1{
     font-size:26px;
   }
@@ -241,11 +369,17 @@ button:disabled{
   #signatureCanvas{
     height:200px;
   }
+
+  .gallery-frame{
+    height:390px;
+  }
 }
 </style>
 </head>
 
 <body>
+
+<div id="confettiContainer"></div>
 
 <!-- SCREEN 1 -->
 
@@ -358,7 +492,7 @@ button:disabled{
     <button
       type="button"
       id="signatureButton"
-      onclick="goToPhotos()"
+      onclick="saveSignatureAndContinue()"
       disabled>
       Continue →
     </button>
@@ -382,37 +516,123 @@ button:disabled{
       Some moments are worth keeping forever.
     </p>
 
-    <img
-      class="photo"
-      src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80"
-      alt="Beautiful memory">
+    <div class="gallery-area">
 
-    <p class="caption">
-      Some memories just feel different. ❤️
-    </p>
+      <div class="gallery-frame" id="galleryFrame">
+        <div class="gallery-empty" id="galleryEmpty">
+          Loading photos...
+        </div>
+      </div>
 
-    <button type="button" onclick="nextMemory()">
-      Next Memory →
+      <div class="gallery-controls">
+
+        <button
+          type="button"
+          class="gallery-arrow"
+          onclick="previousPhoto()">
+          ←
+        </button>
+
+        <span
+          class="gallery-count"
+          id="galleryCount">
+        </span>
+
+        <button
+          type="button"
+          class="gallery-arrow"
+          onclick="nextPhoto()">
+          →
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="upload-box">
+
+      <label
+        for="photoInput"
+        class="upload-label">
+        Upload Photos 📸
+      </label>
+
+      <input
+        id="photoInput"
+        type="file"
+        accept="image/*"
+        multiple>
+
+      <div
+        id="uploadStatus"
+        class="upload-status">
+        No photos selected
+      </div>
+
+      <p class="upload-note">
+        You can select multiple photos together.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      id="photoContinueButton"
+      onclick="goToNotes()">
+      Continue →
     </button>
 
   </div>
 </section>
 
 
-<!-- SCREEN 5 -->
+<!-- SCREEN 5 : NOTES -->
 
 <section class="screen" id="screen5">
-  <div class="card">
+  <div class="card notes-card">
 
     <h1>That's It... ✨</h1>
 
     <p>
-      But maybe this little surprise becomes one of your favourite memories.
+      My dear Buggu ji you know n i always love to live beside you around of you because I love it. I feel good and comfortable, you are always special in every conditions, in every mood and situation. I know some times my voices hurts you but there are no any intentions to do like as. Why will I do, I always I say that I want to see you happy. And you know for keep you happy I do too many actions may be I will get fail or it not works but I always want and do. Buggu you are so cute, lovely and I know you get angry because sometimes I irritate you, but really I love you yarr ❤❤.
     </p>
 
-    <button type="button" onclick="restartExperience()">
-      Experience Again ↻
+    <p>
+      And there was a little surprise and my lot of efforts to make you happy and for making feel good. I believe it you will like it and also try to keep understand and keep forever this bond with this same attitude and mindset. We need to understand each others feelings and needs because now we are have a negative mindset that's why it's making fight, but we will find out and understand each other's.
+    </p>
+
+    <p>
+      And in the last I always say and will say that please in every situation no matter how much tough times please be happy and please also share with me.
+    </p>
+
+    <p>
+      And you say n that oneday you will hate me than I swear it that it is impossible. May be I will stop yapping, joking, or anything but it will not happen. And please don't judge me yarr and don't overthink also. We are same, however we were. Nothing is change only we have to change our way of thinking. And it will also gonna fine. and please never give me silent treatment if I am wrong than directly teel me slap me but not it yarr. Of you will judge me than it is not good yar, everything which I do it gonna in over excitement and in happiness please don't take it serious. If it is good than accept otherwise return me.
+    </p>
+
+    <p>
+      And in the last Thank you so kuchh cuttu. . 🌹🌹
+    </p>
+
+    <button
+      type="button"
+      onclick="goToFinal()">
+      Continue →
     </button>
+
+  </div>
+</section>
+
+
+<!-- SCREEN 6 : FINAL -->
+
+<section class="screen" id="screen6">
+  <div class="card">
+
+    <h1>❤🌹</h1>
+
+    <p>
+      Congratulation your agreent has done now your friendship is forever with Mr. khdus 🤝. ❤🌹.
+    </p>
 
   </div>
 </section>
@@ -420,13 +640,91 @@ button:disabled{
 
 <script>
 
+/* ================================
+   SUPABASE CONNECTION
+================================ */
+
+const SUPABASE_URL =
+  "https://ymssjavbfqdrfudbwffh.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_SFi9XPVxiKESQf5bOXWvSg_IcYIPyLC";
+
+const SUPABASE_SCRIPT =
+  document.createElement("script");
+
+SUPABASE_SCRIPT.src =
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+SUPABASE_SCRIPT.onload = initializeSupabase;
+
+document.head.appendChild(SUPABASE_SCRIPT);
+
+let supabaseClient = null;
+let currentUser = null;
+
+
+/* INITIALIZE SUPABASE */
+
+async function initializeSupabase(){
+
+  try{
+
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    const result =
+      await supabaseClient.auth.getSession();
+
+    if(result.data.session){
+
+      currentUser =
+        result.data.session.user;
+
+    }else{
+
+      const signIn =
+        await supabaseClient.auth.signInAnonymously();
+
+      if(signIn.error){
+
+        console.error(
+          "Anonymous sign-in error:",
+          signIn.error
+        );
+
+        return;
+      }
+
+      currentUser =
+        signIn.data.user;
+    }
+
+  }catch(error){
+
+    console.error(
+      "Supabase initialization error:",
+      error
+    );
+
+  }
+
+}
+
+
 /* SCREEN CONTROL */
 
 function showScreen(number){
 
-  document.querySelectorAll(".screen").forEach(function(screen){
-    screen.classList.remove("active");
-  });
+  document.querySelectorAll(".screen")
+    .forEach(function(screen){
+
+      screen.classList.remove("active");
+
+    });
 
   document.getElementById("screen" + number)
     .classList.add("active");
@@ -435,24 +733,33 @@ function showScreen(number){
     top:0,
     behavior:"smooth"
   });
+
 }
 
 
-/* OPEN ENVELOPE */
+/* ================================
+   OPEN ENVELOPE
+================================ */
 
 function openSurprise(){
 
-  var envelope = document.getElementById("envelope");
+  var envelope =
+    document.getElementById("envelope");
 
   envelope.classList.add("open");
 
   setTimeout(function(){
+
     showScreen(2);
+
   },1000);
+
 }
 
 
-/* AGREEMENT CHECK */
+/* ================================
+   AGREEMENT
+================================ */
 
 var agreementBoxes =
   document.querySelectorAll(".agreement");
@@ -464,37 +771,32 @@ function checkConditions(){
   agreementBoxes.forEach(function(box){
 
     if(!box.checked){
+
       allChecked = false;
+
     }
 
   });
 
-  document.getElementById("agreeButton").disabled =
-    !allChecked;
+  document.getElementById("agreeButton")
+    .disabled = !allChecked;
+
 }
 
 
 agreementBoxes.forEach(function(box){
 
-  box.addEventListener("change",checkConditions);
+  box.addEventListener(
+    "change",
+    checkConditions
+  );
 
 });
 
 
-/* GO TO SIGNATURE */
-
-function goToSignature(){
-
-  showScreen(3);
-
-  setTimeout(function(){
-    setupCanvas();
-  },100);
-
-}
-
-
-/* SIGNATURE CANVAS */
+/* ================================
+   SIGNATURE
+================================ */
 
 var canvas =
   document.getElementById("signatureCanvas");
@@ -506,16 +808,19 @@ var drawing = false;
 var hasSignature = false;
 
 
-/* CANVAS SIZE */
-
 function setupCanvas(){
 
-  var rect = canvas.getBoundingClientRect();
+  var rect =
+    canvas.getBoundingClientRect();
 
-  var dpr = window.devicePixelRatio || 1;
+  var dpr =
+    window.devicePixelRatio || 1;
 
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
+  canvas.width =
+    rect.width * dpr;
+
+  canvas.height =
+    rect.height * dpr;
 
   ctx.setTransform(
     dpr,
@@ -529,78 +834,82 @@ function setupCanvas(){
   ctx.lineWidth = 3;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-
-  /* BLACK SIGNATURE */
-
   ctx.strokeStyle = "#000000";
 
 }
 
 
-/* GET POINTER POSITION */
-
 function getPosition(event){
 
-  var rect = canvas.getBoundingClientRect();
+  var rect =
+    canvas.getBoundingClientRect();
 
   return {
+
     x:event.clientX - rect.left,
+
     y:event.clientY - rect.top
+
   };
 
 }
 
 
-/* START DRAWING */
+canvas.addEventListener(
+  "pointerdown",
+  function(event){
 
-canvas.addEventListener("pointerdown",function(event){
+    event.preventDefault();
 
-  event.preventDefault();
+    drawing = true;
 
-  drawing = true;
+    canvas.setPointerCapture(
+      event.pointerId
+    );
 
-  canvas.setPointerCapture(event.pointerId);
+    var pos =
+      getPosition(event);
 
-  var pos = getPosition(event);
+    ctx.beginPath();
 
-  ctx.beginPath();
+    ctx.moveTo(
+      pos.x,
+      pos.y
+    );
 
-  ctx.moveTo(
-    pos.x,
-    pos.y
-  );
-
-});
-
-
-/* DRAW */
-
-canvas.addEventListener("pointermove",function(event){
-
-  if(!drawing){
-    return;
   }
-
-  event.preventDefault();
-
-  var pos = getPosition(event);
-
-  ctx.lineTo(
-    pos.x,
-    pos.y
-  );
-
-  ctx.stroke();
-
-  hasSignature = true;
-
-  document.getElementById("signatureButton")
-    .disabled = false;
-
-});
+);
 
 
-/* STOP DRAWING */
+canvas.addEventListener(
+  "pointermove",
+  function(event){
+
+    if(!drawing){
+      return;
+    }
+
+    event.preventDefault();
+
+    var pos =
+      getPosition(event);
+
+    ctx.lineTo(
+      pos.x,
+      pos.y
+    );
+
+    ctx.stroke();
+
+    hasSignature = true;
+
+    document.getElementById(
+      "signatureButton"
+    ).disabled = false;
+
+  }
+);
+
 
 function stopDrawing(){
 
@@ -609,6 +918,7 @@ function stopDrawing(){
   ctx.closePath();
 
 }
+
 
 canvas.addEventListener(
   "pointerup",
@@ -620,17 +930,13 @@ canvas.addEventListener(
   stopDrawing
 );
 
-canvas.addEventListener(
-  "pointerleave",
-  stopDrawing
-);
-
 
 /* CLEAR SIGNATURE */
 
 function clearSignature(){
 
-  var rect = canvas.getBoundingClientRect();
+  var rect =
+    canvas.getBoundingClientRect();
 
   ctx.clearRect(
     0,
@@ -641,72 +947,589 @@ function clearSignature(){
 
   hasSignature = false;
 
-  document.getElementById("signatureButton")
-    .disabled = true;
+  document.getElementById(
+    "signatureButton"
+  ).disabled = true;
 
   setupCanvas();
 
 }
 
 
-/* GO TO PHOTO */
+/* ================================
+   GO TO SIGNATURE
+================================ */
 
-function goToPhotos(){
+function goToSignature(){
+
+  showScreen(3);
+
+  setTimeout(function(){
+
+    setupCanvas();
+
+  },100);
+
+}
+
+
+/* ================================
+   SAVE SIGNATURE
+================================ */
+
+async function saveSignatureAndContinue(){
 
   if(!hasSignature){
     return;
   }
 
-  showScreen(4);
+  if(!supabaseClient || !currentUser){
+
+    alert(
+      "Please wait a moment and try again."
+    );
+
+    return;
+
+  }
+
+  var button =
+    document.getElementById(
+      "signatureButton"
+    );
+
+  button.disabled = true;
+  button.textContent = "Saving...";
+
+  try{
+
+    const blob =
+      await new Promise(function(resolve){
+
+        canvas.toBlob(
+          resolve,
+          "image/png"
+        );
+
+      });
+
+    const filePath =
+      "signatures/" +
+      currentUser.id +
+      "/signature-" +
+      Date.now() +
+      ".png";
+
+    const upload =
+      await supabaseClient
+        .storage
+        .from("surprise-files")
+        .upload(
+          filePath,
+          blob,
+          {
+            contentType:"image/png",
+            upsert:false
+          }
+        );
+
+    if(upload.error){
+
+      console.error(
+        "Signature upload error:",
+        upload.error
+      );
+
+      button.disabled = false;
+      button.textContent = "Continue →";
+
+      alert(
+        "Signature could not be saved. Please try again."
+      );
+
+      return;
+    }
+
+    showScreen(4);
+
+    loadGallery();
+
+  }catch(error){
+
+    console.error(
+      "Signature error:",
+      error
+    );
+
+    button.disabled = false;
+    button.textContent = "Continue →";
+
+  }
 
 }
 
 
-/* NEXT MEMORY */
+/* ================================
+   GALLERY
+================================ */
 
-function nextMemory(){
+let galleryPhotos = [];
+let currentPhotoIndex = 0;
+
+
+async function loadGallery(){
+
+  const frame =
+    document.getElementById(
+      "galleryFrame"
+    );
+
+  const empty =
+    document.getElementById(
+      "galleryEmpty"
+    );
+
+  const count =
+    document.getElementById(
+      "galleryCount"
+    );
+
+  try{
+
+    if(!supabaseClient){
+
+      empty.textContent =
+        "Loading photos...";
+
+      return;
+
+    }
+
+    const result =
+      await supabaseClient
+        .storage
+        .from("surprise-files")
+        .list(
+          "gallery",
+          {
+            limit:100,
+            sort:{
+              column:"name",
+              order:"asc"
+            }
+          }
+        );
+
+    if(result.error){
+
+      console.error(
+        "Gallery list error:",
+        result.error
+      );
+
+      empty.textContent =
+        "Photos could not be loaded.";
+
+      return;
+
+    }
+
+    const files =
+      result.data || [];
+
+    const imageFiles =
+      files.filter(function(file){
+
+        return file.name &&
+          !file.name.endsWith("/");
+
+      });
+
+    galleryPhotos = [];
+
+    for(
+      let i = 0;
+      i < imageFiles.length;
+      i++
+    ){
+
+      const file =
+        imageFiles[i];
+
+      const path =
+        "gallery/" + file.name;
+
+      const signed =
+        await supabaseClient
+          .storage
+          .from("surprise-files")
+          .createSignedUrl(
+            path,
+            3600
+          );
+
+      if(
+        !signed.error &&
+        signed.data &&
+        signed.data.signedUrl
+      ){
+
+        galleryPhotos.push(
+          signed.data.signedUrl
+        );
+
+      }
+
+    }
+
+    frame
+      .querySelectorAll("img")
+      .forEach(function(img){
+
+        img.remove();
+
+      });
+
+    if(galleryPhotos.length === 0){
+
+      empty.style.display = "block";
+
+      empty.textContent =
+        "No photos available.";
+
+      count.textContent = "";
+
+      return;
+
+    }
+
+    empty.style.display = "none";
+
+    galleryPhotos.forEach(
+      function(url,index){
+
+        const img =
+          document.createElement("img");
+
+        img.src = url;
+
+        img.alt =
+          "Memory " + (index + 1);
+
+        if(index === 0){
+
+          img.classList.add("active");
+
+        }
+
+        frame.appendChild(img);
+
+      }
+    );
+
+    currentPhotoIndex = 0;
+
+    updateGallery();
+
+  }catch(error){
+
+    console.error(
+      "Gallery error:",
+      error
+    );
+
+    empty.textContent =
+      "Photos could not be loaded.";
+
+  }
+
+}
+
+
+function updateGallery(){
+
+  const images =
+    document.querySelectorAll(
+      "#galleryFrame img"
+    );
+
+  images.forEach(
+    function(img,index){
+
+      img.classList.toggle(
+        "active",
+        index === currentPhotoIndex
+      );
+
+    }
+  );
+
+  const count =
+    document.getElementById(
+      "galleryCount"
+    );
+
+  if(galleryPhotos.length){
+
+    count.textContent =
+      (currentPhotoIndex + 1) +
+      " / " +
+      galleryPhotos.length;
+
+  }
+
+}
+
+
+function previousPhoto(){
+
+  if(galleryPhotos.length === 0){
+    return;
+  }
+
+  currentPhotoIndex--;
+
+  if(currentPhotoIndex < 0){
+
+    currentPhotoIndex =
+      galleryPhotos.length - 1;
+
+  }
+
+  updateGallery();
+
+}
+
+
+function nextPhoto(){
+
+  if(galleryPhotos.length === 0){
+    return;
+  }
+
+  currentPhotoIndex++;
+
+  if(
+    currentPhotoIndex >=
+    galleryPhotos.length
+  ){
+
+    currentPhotoIndex = 0;
+
+  }
+
+  updateGallery();
+
+}
+
+
+/* ================================
+   VISITOR PHOTO UPLOAD
+================================ */
+
+document.getElementById(
+  "photoInput"
+).addEventListener(
+  "change",
+  async function(event){
+
+    const files =
+      Array.from(
+        event.target.files || []
+      );
+
+    const status =
+      document.getElementById(
+        "uploadStatus"
+      );
+
+    if(files.length === 0){
+
+      status.textContent =
+        "No photos selected";
+
+      return;
+
+    }
+
+    status.textContent =
+      files.length +
+      " photos selected";
+
+    if(
+      !supabaseClient ||
+      !currentUser
+    ){
+
+      status.textContent =
+        "Please wait a moment and try again.";
+
+      return;
+
+    }
+
+    for(
+      let i = 0;
+      i < files.length;
+      i++
+    ){
+
+      const file = files[i];
+
+      const safeName =
+        file.name
+          .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+          );
+
+      const path =
+        "visitor-photos/" +
+        currentUser.id +
+        "/" +
+        Date.now() +
+        "-" +
+        i +
+        "-" +
+        safeName;
+
+      const upload =
+        await supabaseClient
+          .storage
+          .from("surprise-files")
+          .upload(
+            path,
+            file,
+            {
+              contentType:
+                file.type || "image/jpeg",
+              upsert:false
+            }
+          );
+
+      if(upload.error){
+
+        console.error(
+          "Visitor photo upload error:",
+          upload.error
+        );
+
+      }
+
+    }
+
+    status.textContent =
+      files.length +
+      " photos selected";
+
+  }
+);
+
+
+/* ================================
+   NOTES
+================================ */
+
+function goToNotes(){
 
   showScreen(5);
 
 }
 
 
-/* RESTART */
+/* ================================
+   FINAL SCREEN
+================================ */
 
-function restartExperience(){
+function goToFinal(){
 
-  document.querySelectorAll(".agreement")
-    .forEach(function(box){
-      box.checked = false;
-    });
+  showScreen(6);
 
-  document.getElementById("agreeButton")
-    .disabled = true;
-
-  clearSignature();
-
-  document.getElementById("envelope")
-    .classList.remove("open");
-
-  showScreen(1);
+  createConfetti();
 
 }
 
 
-/* RESIZE */
+/* ================================
+   CONFETTI
+================================ */
 
-window.addEventListener("resize",function(){
+function createConfetti(){
 
-  if(document.getElementById("screen3")
-    .classList.contains("active")){
+  const container =
+    document.getElementById(
+      "confettiContainer"
+    );
 
-    setupCanvas();
+  container.innerHTML = "";
+
+  for(
+    let i = 0;
+    i < 90;
+    i++
+  ){
+
+    const piece =
+      document.createElement("div");
+
+    piece.className =
+      "confetti";
+
+    piece.style.left =
+      Math.random() * 100 + "%";
+
+    piece.style.animationDuration =
+      (3 + Math.random() * 4) + "s";
+
+    piece.style.animationDelay =
+      Math.random() * 1.5 + "s";
+
+    piece.style.transform =
+      "rotate(" +
+      Math.random() * 360 +
+      "deg)";
+
+    piece.style.background =
+      [
+        "#ff4f91",
+        "#9b5cff",
+        "#ffd166",
+        "#06d6a0",
+        "#4cc9f0"
+      ][
+        Math.floor(
+          Math.random() * 5
+        )
+      ];
+
+    container.appendChild(piece);
 
   }
 
-});
+}
+
+
+/* ================================
+   RESIZE
+================================ */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    if(
+      document.getElementById("screen3")
+        .classList.contains("active")
+    ){
+
+      setupCanvas();
+
+    }
+
+  }
+);
 
 </script>
 
 </body>
-</html>
+  </html>
