@@ -3,1543 +3,1308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Surprise ❤️</title>
+<title>Yours Abhi ❤️</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#ffe4ef,#eee4ff);
-  min-height:100vh;
-  color:#222;
-  overflow-x:hidden;
-}
-
-.screen{
-  display:none;
-  min-height:100vh;
-  width:100%;
-  padding:25px 18px;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.screen.active{
-  display:flex;
-}
-
-.card{
-  width:100%;
-  max-width:520px;
-  background:rgba(255,255,255,.96);
-  border-radius:25px;
-  padding:30px 20px;
-  box-shadow:0 15px 45px rgba(0,0,0,.15);
-}
-
-h1{
-  font-size:30px;
-  margin-bottom:15px;
-}
-
-p{
-  font-size:17px;
-  line-height:1.6;
-  margin-bottom:20px;
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left,#ffe5ef 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#e8ddff 0%,transparent 35%),
+        linear-gradient(135deg,#fff7fb,#f5f0ff);
+    color:#29202a;
+    overflow-x:hidden;
 }
 
 button{
-  border:0;
-  border-radius:30px;
-  padding:14px 24px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(135deg,#ff4f91,#9b5cff);
-  color:white;
-  box-shadow:0 8px 20px rgba(155,92,255,.25);
+    font-family:inherit;
 }
 
-button:disabled{
-  opacity:.45;
-  cursor:not-allowed;
+.screen{
+    min-height:100vh;
+    width:100%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px 16px;
+    position:relative;
+}
+
+.screen.active{
+    display:flex;
+}
+
+.card{
+    width:min(720px,100%);
+    background:rgba(255,255,255,.90);
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:30px;
+    padding:35px 24px;
+    box-shadow:0 20px 70px rgba(71,35,75,.16);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    text-align:center;
+    position:relative;
+    z-index:5;
+}
+
+h1{
+    font-size:clamp(30px,7vw,52px);
+    margin-bottom:14px;
+    color:#8e3d6d;
+}
+
+h2{
+    font-size:clamp(27px,6vw,42px);
+    margin-bottom:14px;
+    color:#8e3d6d;
+}
+
+.subtitle{
+    font-size:17px;
+    line-height:1.7;
+    color:#5c4c58;
+    margin-bottom:28px;
+}
+
+.small-text{
+    font-size:14px;
+    line-height:1.6;
+    color:#766875;
+}
+
+/* BUTTON */
+
+.main-btn{
+    border:none;
+    outline:none;
+    padding:15px 27px;
+    border-radius:999px;
+    background:linear-gradient(135deg,#b84f88,#813f9e);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(137,57,123,.25);
+    transition:.25s ease;
+}
+
+.main-btn:hover{
+    transform:translateY(-2px);
+}
+
+.main-btn:active{
+    transform:scale(.97);
+}
+
+.main-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
 }
 
 /* ENVELOPE */
 
 .envelope-area{
-  margin:25px auto;
-  width:270px;
-  height:190px;
-  position:relative;
-  perspective:800px;
+    margin:30px auto 32px;
+    width:250px;
+    height:170px;
+    position:relative;
+    perspective:900px;
 }
 
 .envelope{
-  position:absolute;
-  width:100%;
-  height:150px;
-  bottom:0;
-  background:#ff75a9;
-  border-radius:0 0 12px 12px;
-  box-shadow:0 12px 25px rgba(0,0,0,.18);
-  overflow:hidden;
+    width:100%;
+    height:100%;
+    position:relative;
+    cursor:pointer;
 }
 
-.envelope:before{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:0;
-  border-left:135px solid transparent;
-  border-right:135px solid transparent;
-  border-bottom:100px solid #ff4f91;
-  z-index:2;
+.envelope-body{
+    position:absolute;
+    inset:30px 0 0;
+    background:linear-gradient(135deg,#f6a7c7,#c77adf);
+    border-radius:5px 5px 12px 12px;
+    box-shadow:0 18px 35px rgba(115,57,116,.2);
+    overflow:hidden;
 }
 
-.flap{
-  position:absolute;
-  top:0;
-  left:0;
-  width:0;
-  height:0;
-  border-left:135px solid transparent;
-  border-right:135px solid transparent;
-  border-top:105px solid #d94d91;
-  transform-origin:top center;
-  transition:transform 1s ease;
-  z-index:4;
+.envelope-body:before{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0;
+    height:0;
+    border-left:125px solid transparent;
+    border-right:125px solid transparent;
+    border-bottom:85px solid rgba(255,255,255,.22);
 }
 
-.heart{
-  position:absolute;
-  z-index:5;
-  left:50%;
-  top:58px;
-  transform:translateX(-50%);
-  font-size:40px;
-  transition:.5s;
+.envelope-flap{
+    position:absolute;
+    top:30px;
+    left:0;
+    width:100%;
+    height:100px;
+    background:linear-gradient(135deg,#f7b4d0,#c96edb);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;
+    transition:1s ease;
+    z-index:4;
+}
+
+.envelope.open .envelope-flap{
+    transform:rotateX(180deg);
 }
 
 .welcome{
-  position:absolute;
-  z-index:3;
-  width:100%;
-  top:18px;
-  font-size:22px;
-  font-weight:bold;
-  color:white;
+    position:absolute;
+    z-index:7;
+    top:78px;
+    left:50%;
+    transform:translateX(-50%);
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:4px;
+    pointer-events:none;
+    transition:.5s ease;
 }
 
-.envelope.open .flap{
-  transform:rotateX(180deg);
-}
-
-.envelope.open .heart{
-  transform:translateX(-50%) translateY(-55px);
-  opacity:0;
+.envelope.open .welcome{
+    opacity:0;
 }
 
 /* CONDITIONS */
 
 .conditions{
-  text-align:left;
-  margin:20px 0;
+    text-align:left;
+    margin:25px 0;
 }
 
 .condition{
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-  padding:13px;
-  margin-bottom:10px;
-  background:#fff0f6;
-  border-radius:14px;
+    display:flex;
+    gap:13px;
+    align-items:flex-start;
+    padding:15px;
+    margin-bottom:12px;
+    border-radius:16px;
+    background:#fff7fb;
+    border:1px solid #f0dce9;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.condition:hover{
+    background:#fff0f7;
 }
 
 .condition input{
-  width:20px;
-  height:20px;
-  margin-top:2px;
-  accent-color:#ff4f91;
+    width:20px;
+    height:20px;
+    margin-top:2px;
+    accent-color:#a34478;
+    flex-shrink:0;
+}
+
+.condition span{
+    font-size:15px;
+    line-height:1.5;
 }
 
 /* SIGNATURE */
 
-.signature-instruction{
-  font-weight:bold;
-  color:#111;
-  margin-bottom:10px;
+.signature-wrap{
+    margin:22px auto;
+    max-width:600px;
 }
 
-.canvas-wrap{
-  width:100%;
-  max-width:460px;
-  margin:0 auto 15px;
-  background:white;
-  border:3px solid #222;
-  border-radius:15px;
-  overflow:hidden;
+.signature-canvas{
+    display:block;
+    width:100%;
+    height:230px;
+    background:white;
+    border:2px solid #e3d5df;
+    border-radius:18px;
+    touch-action:none;
+    cursor:crosshair;
+    box-shadow:inset 0 0 15px rgba(0,0,0,.03);
 }
 
-#signatureCanvas{
-  display:block;
-  width:100%;
-  height:220px;
-  background:#fff;
-  touch-action:none;
-  cursor:crosshair;
+.signature-actions{
+    margin-top:12px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
 .clear-btn{
-  background:#222;
-  margin-bottom:15px;
+    border:1px solid #d7c3d1;
+    background:white;
+    color:#6c5365;
+    padding:11px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.note{
-  font-size:14px;
-  font-weight:bold;
-  color:#444;
-  margin-top:10px;
+.signature-note{
+    margin-top:18px;
+    padding:14px;
+    border-radius:15px;
+    background:#fff5fa;
+    color:#754961;
+    font-size:14px;
+    line-height:1.6;
 }
 
-/* GALLERY */
-
-.gallery-area{
-  position:relative;
-  width:100%;
-  margin:20px auto;
-}
-
-.gallery-frame{
-  width:100%;
-  height:420px;
-  background:#f5f5f5;
-  border-radius:18px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.gallery-frame img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-
-.gallery-frame img.active{
-  display:block;
-}
-
-.gallery-empty{
-  padding:25px;
-  font-size:16px;
-  line-height:1.6;
-  color:#555;
-}
-
-.gallery-controls{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-top:12px;
-}
-
-.gallery-arrow{
-  width:48px;
-  height:48px;
-  padding:0;
-  border-radius:50%;
-  flex-shrink:0;
-}
-
-.gallery-count{
-  font-weight:bold;
-  font-size:15px;
-}
+/* PHOTOS */
 
 .upload-box{
-  margin:20px 0;
-  padding:18px;
-  background:#fff0f6;
-  border-radius:16px;
+    border:2px dashed #d9a9c8;
+    border-radius:22px;
+    padding:28px 18px;
+    background:#fff8fc;
+    margin:25px 0;
 }
 
-.upload-label{
-  display:inline-block;
-  border:0;
-  border-radius:30px;
-  padding:14px 22px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(135deg,#ff4f91,#9b5cff);
-  color:white;
-  box-shadow:0 8px 20px rgba(155,92,255,.25);
+.upload-box p{
+    margin-bottom:16px;
+    color:#765a6d;
+}
+
+.file-label{
+    display:inline-block;
+    padding:13px 21px;
+    border-radius:999px;
+    background:linear-gradient(135deg,#b84f88,#813f9e);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 #photoInput{
-  display:none;
+    display:none;
 }
 
-.upload-status{
-  margin-top:12px;
-  font-size:14px;
-  font-weight:bold;
-  color:#444;
+.photo-count{
+    margin-top:15px;
+    color:#7b5c70;
+    font-size:14px;
 }
 
-.upload-note{
-  margin-top:8px;
-  margin-bottom:0;
-  font-size:13px;
-  color:#555;
+.gallery{
+    position:relative;
+    width:100%;
+    max-width:580px;
+    margin:20px auto 25px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.gallery.show{
+    display:flex;
+}
+
+.gallery-image-wrap{
+    width:calc(100% - 90px);
+    max-width:500px;
+    aspect-ratio:4/5;
+    border-radius:22px;
+    overflow:hidden;
+    background:#f4edf2;
+    box-shadow:0 12px 35px rgba(80,40,70,.15);
+}
+
+.gallery-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.gallery-arrow{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 5px 18px rgba(60,30,60,.15);
+    color:#87416f;
+    font-size:22px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.gallery-info{
+    text-align:center;
+    font-size:14px;
+    color:#765b6e;
+    margin-top:10px;
 }
 
 /* NOTES */
 
-.notes-card{
-  text-align:left;
+.notes{
+    text-align:left;
+    max-height:65vh;
+    overflow-y:auto;
+    padding-right:5px;
+    margin:20px 0 25px;
 }
 
-.notes-card h1{
-  text-align:center;
+.notes p{
+    font-size:16px;
+    line-height:1.85;
+    color:#4d414a;
+    margin-bottom:22px;
 }
 
-.notes-card p{
-  text-align:left;
-  margin-bottom:22px;
+/* FINAL */
+
+#screen6{
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 20%,#fff 0%,#ffeef7 30%,#eee3ff 75%,#e7dcff 100%);
 }
 
-/* FINAL CONFETTI */
+.final-card{
+    position:relative;
+    z-index:10;
+}
 
-#confettiContainer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:9999;
+.final-card h1{
+    font-size:clamp(32px,8vw,58px);
+}
+
+.final-message{
+    font-size:clamp(19px,4.5vw,27px);
+    line-height:1.7;
+    color:#593d52;
+    margin-top:15px;
+}
+
+/* CONFETTI / RIBBON */
+
+.confetti-container{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:2;
 }
 
 .confetti{
-  position:absolute;
-  top:-30px;
-  width:9px;
-  height:18px;
-  animation:fall linear forwards;
+    position:absolute;
+    top:-12vh;
+    left:0;
+    width:9px;
+    height:24px;
+    border-radius:3px;
+    opacity:.95;
+    animation-name:fall;
+    animation-timing-function:linear;
+    animation-iteration-count:1;
+}
+
+.confetti.ribbon{
+    width:7px;
+    height:32px;
+    border-radius:5px;
+}
+
+.confetti.small{
+    width:6px;
+    height:15px;
 }
 
 @keyframes fall{
-  0%{
-    transform:translateY(-40px) rotate(0deg);
-    opacity:1;
-  }
+    0%{
+        transform:
+            translate3d(0,-15vh,0)
+            rotate(0deg)
+            rotateX(0deg);
+        opacity:0;
+    }
 
-  100%{
-    transform:translateY(110vh) rotate(720deg);
-    opacity:.9;
-  }
+    8%{
+        opacity:1;
+    }
+
+    50%{
+        transform:
+            translate3d(var(--drift),50vh,0)
+            rotate(360deg)
+            rotateX(180deg);
+    }
+
+    100%{
+        transform:
+            translate3d(calc(var(--drift) * -1),115vh,0)
+            rotate(760deg)
+            rotateX(360deg);
+        opacity:.9;
+    }
+}
+
+/* DECORATIONS */
+
+.heart{
+    position:absolute;
+    font-size:24px;
+    opacity:.35;
+    animation:float 4s ease-in-out infinite;
+}
+
+.heart.one{
+    top:8%;
+    left:8%;
+}
+
+.heart.two{
+    right:9%;
+    top:18%;
+    animation-delay:1s;
+}
+
+.heart.three{
+    left:12%;
+    bottom:10%;
+    animation-delay:2s;
+}
+
+.heart.four{
+    right:10%;
+    bottom:12%;
+    animation-delay:1.5s;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(-5deg);}
+    50%{transform:translateY(-15px) rotate(5deg);}
 }
 
 /* MOBILE */
 
-@media(max-width:480px){
+@media(max-width:600px){
 
-  h1{
-    font-size:26px;
-  }
+    .screen{
+        padding:18px 12px;
+    }
 
-  .card{
-    padding:25px 16px;
-  }
+    .card{
+        padding:28px 17px;
+        border-radius:25px;
+    }
 
-  .envelope-area{
-    transform:scale(.9);
-  }
+    .envelope-area{
+        width:230px;
+        height:155px;
+    }
 
-  #signatureCanvas{
-    height:200px;
-  }
+    .envelope-body{
+        inset:28px 0 0;
+    }
 
-  .gallery-frame{
-    height:390px;
-  }
+    .envelope-flap{
+        top:28px;
+    }
+
+    .welcome{
+        top:72px;
+        font-size:19px;
+    }
+
+    .condition{
+        padding:13px;
+    }
+
+    .condition span{
+        font-size:14px;
+    }
+
+    .signature-canvas{
+        height:210px;
+    }
+
+    .notes{
+        max-height:60vh;
+    }
+
+    .notes p{
+        font-size:15px;
+        line-height:1.75;
+    }
+
+    .gallery-image-wrap{
+        width:calc(100% - 76px);
+    }
+
+    .gallery-arrow{
+        width:36px;
+        height:36px;
+        font-size:18px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div id="confettiContainer"></div>
-
 <!-- SCREEN 1 -->
-
 <section class="screen active" id="screen1">
-  <div class="card">
 
-    <h1>Yours Abhi ❤️</h1>
+    <div class="heart one">❤</div>
+    <div class="heart two">❤</div>
 
-    <p>
-      Someone has prepared something special for you.
-    </p>
+    <div class="card">
 
-    <div class="envelope-area">
+        <h1>Yours Abhi ❤️</h1>
 
-      <div class="envelope" id="envelope">
+        <p class="subtitle">
+            Someone has prepared something special for you.
+        </p>
 
-        <div class="welcome">WELCOME</div>
+        <div class="envelope-area">
 
-        <div class="flap"></div>
+            <div class="envelope" id="envelope">
 
-        <div class="heart">❤️</div>
+                <div class="envelope-body"></div>
 
-      </div>
+                <div class="envelope-flap"></div>
+
+                <div class="welcome">
+                    WELCOME
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="main-btn" id="openBtn" onclick="openSurprise()">
+            Open My Surprise 💌
+        </button>
 
     </div>
-
-    <button type="button" onclick="openSurprise()">
-      Open My Surprise 💌
-    </button>
-
-  </div>
 </section>
 
 
 <!-- SCREEN 2 -->
-
 <section class="screen" id="screen2">
-  <div class="card">
 
-    <h1>One Little Agreement 💗</h1>
+    <div class="card">
 
-    <p>
-      Before we continue, agree to these little conditions.
-    </p>
+        <h2>One Little Agreement 💗</h2>
 
-    <div class="conditions">
+        <p class="subtitle">
+            Before we continue, agree to these little conditions.
+        </p>
 
-      <label class="condition">
-        <input type="checkbox" class="agreement">
-        <span>You will always share your problems with me.</span>
-      </label>
+        <div class="conditions">
 
-      <label class="condition">
-        <input type="checkbox" class="agreement">
-        <span>You will always stay with me in all conditions.</span>
-      </label>
+            <label class="condition">
+                <input type="checkbox" class="agreement">
+                <span>
+                    You will always share your problems with me.
+                </span>
+            </label>
 
-      <label class="condition">
-        <input type="checkbox" class="agreement">
-        <span>You will never judge me, will try to understand.</span>
-      </label>
+            <label class="condition">
+                <input type="checkbox" class="agreement">
+                <span>
+                    You will always stay with me in all conditions.
+                </span>
+            </label>
 
-      <label class="condition">
-        <input type="checkbox" class="agreement">
-        <span>Always be happy.</span>
-      </label>
+            <label class="condition">
+                <input type="checkbox" class="agreement">
+                <span>
+                    You will never judge me, will try to understand.
+                </span>
+            </label>
+
+            <label class="condition">
+                <input type="checkbox" class="agreement">
+                <span>
+                    Always be happy.
+                </span>
+            </label>
+
+        </div>
+
+        <button
+            class="main-btn"
+            id="agreementBtn"
+            disabled
+            onclick="goToSignature()">
+            Agree & Continue →
+        </button>
 
     </div>
-
-    <button
-      type="button"
-      id="agreeButton"
-      onclick="goToSignature()"
-      disabled>
-      Agree & Continue →
-    </button>
-
-  </div>
 </section>
 
 
 <!-- SCREEN 3 -->
-
 <section class="screen" id="screen3">
-  <div class="card">
 
-    <h1>Your Signature ✍️</h1>
+    <div class="card">
 
-    <p>
-      Sign below to unlock the next part of the surprise.
-    </p>
+        <h2>Your Signature ✍️</h2>
 
-    <p class="signature-instruction">
-      Please sign using black colour.
-    </p>
+        <p class="subtitle">
+            Sign below to unlock the next part of the surprise.
+        </p>
 
-    <div class="canvas-wrap">
-      <canvas id="signatureCanvas"></canvas>
+        <p class="small-text">
+            Please sign using black colour.
+        </p>
+
+        <div class="signature-wrap">
+
+            <canvas
+                id="signatureCanvas"
+                class="signature-canvas">
+            </canvas>
+
+            <div class="signature-actions">
+
+                <button
+                    class="clear-btn"
+                    onclick="clearSignature()">
+                    Clear Signature
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="signature-note">
+            Take a screenshot of your signature and share it with Abhiranjan ❤️
+        </div>
+
+        <br>
+
+        <button
+            class="main-btn"
+            id="signatureBtn"
+            disabled
+            onclick="goToPhotos()">
+            Continue →
+        </button>
+
     </div>
-
-    <button
-      type="button"
-      class="clear-btn"
-      onclick="clearSignature()">
-      Clear Signature
-    </button>
-
-    <br>
-
-    <button
-      type="button"
-      id="signatureButton"
-      onclick="saveSignatureAndContinue()"
-      disabled>
-      Continue →
-    </button>
-
-    <p class="note">
-      Take a screenshot of your signature and share it with Abhiranjan ❤️
-    </p>
-
-  </div>
 </section>
 
 
 <!-- SCREEN 4 -->
-
 <section class="screen" id="screen4">
-  <div class="card">
 
-    <h1>Angel's look</h1>
+    <div class="card">
 
-    <p>
-      Some moments are worth keeping forever.
-    </p>
+        <h2>Angel's look</h2>
 
-    <div class="gallery-area">
+        <p class="subtitle">
+            Some moments are worth keeping forever.
+        </p>
 
-      <div class="gallery-frame" id="galleryFrame">
-        <div class="gallery-empty" id="galleryEmpty">
-          Loading photos...
+        <div class="upload-box">
+
+            <p>
+                Add your special photos here.
+            </p>
+
+            <label class="file-label" for="photoInput">
+                Upload Photos 📸
+            </label>
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+                multiple>
+
+            <div
+                class="photo-count"
+                id="photoCount">
+                No photos selected
+            </div>
+
+            <p class="small-text" style="margin-top:10px;">
+                You can select multiple photos together.
+            </p>
+
         </div>
-      </div>
 
-      <div class="gallery-controls">
+
+        <div class="gallery" id="gallery">
+
+            <button
+                class="gallery-arrow"
+                onclick="previousPhoto()">
+                ‹
+            </button>
+
+            <div class="gallery-image-wrap">
+                <img
+                    id="galleryImage"
+                    class="gallery-image"
+                    alt="Selected photo">
+            </div>
+
+            <button
+                class="gallery-arrow"
+                onclick="nextPhoto()">
+                ›
+            </button>
+
+        </div>
+
+        <div
+            class="gallery-info"
+            id="galleryInfo">
+        </div>
+
+        <br>
 
         <button
-          type="button"
-          class="gallery-arrow"
-          onclick="previousPhoto()">
-          ←
+            class="main-btn"
+            onclick="goToNotes()">
+            Continue →
         </button>
 
-        <span
-          class="gallery-count"
-          id="galleryCount">
-        </span>
-
-        <button
-          type="button"
-          class="gallery-arrow"
-          onclick="nextPhoto()">
-          →
-        </button>
-
-      </div>
-
     </div>
-
-    <div class="upload-box">
-
-      <label
-        for="photoInput"
-        class="upload-label">
-        Upload Photos 📸
-      </label>
-
-      <input
-        id="photoInput"
-        type="file"
-        accept="image/*"
-        multiple>
-
-      <div
-        id="uploadStatus"
-        class="upload-status">
-        No photos selected
-      </div>
-
-      <p class="upload-note">
-        You can select multiple photos together.
-      </p>
-
-    </div>
-
-    <button
-      type="button"
-      id="photoContinueButton"
-      onclick="goToNotes()">
-      Continue →
-    </button>
-
-  </div>
 </section>
 
 
-<!-- SCREEN 5 : NOTES -->
-
+<!-- SCREEN 5 -->
 <section class="screen" id="screen5">
-  <div class="card notes-card">
 
-    <h1>That's It... ✨</h1>
+    <div class="card">
 
-    <p>
-      My dear Buggu ji you know n i always love to live beside you around of you because I love it. I feel good and comfortable, you are always special in every conditions, in every mood and situation. I know some times my voices hurts you but there are no any intentions to do like as. Why will I do, I always I say that I want to see you happy. And you know for keep you happy I do too many actions may be I will get fail or it not works but I always want and do. Buggu you are so cute, lovely and I know you get angry because sometimes I irritate you, but really I love you yarr ❤❤.
-    </p>
+        <h2>Notes ❤️</h2>
 
-    <p>
-      And there was a little surprise and my lot of efforts to make you happy and for making feel good. I believe it you will like it and also try to keep understand and keep forever this bond with this same attitude and mindset. We need to understand each others feelings and needs because now we are have a negative mindset that's why it's making fight, but we will find out and understand each other's.
-    </p>
+        <div class="notes">
 
-    <p>
-      And in the last I always say and will say that please in every situation no matter how much tough times please be happy and please also share with me.
-    </p>
+            <p>
+                My dear Buggu ji you know n i always love to live beside you around of you because I love it. I feel good and comfortable, you are always special in every conditions, in every mood and situation. I know some times my voices hurts you but there are no any intentions to do like as. Why will I do, I always I say that I want to see you happy. And you know for keep you happy I do too many actions may be I will get fail or it not works but I always want and do. Buggu you are so cute, lovely and I know you get angry because sometimes I irritate you, but really I love you yarr ❤❤.
+            </p>
 
-    <p>
-      And you say n that oneday you will hate me than I swear it that it is impossible. May be I will stop yapping, joking, or anything but it will not happen. And please don't judge me yarr and don't overthink also. We are same, however we were. Nothing is change only we have to change our way of thinking. And it will also gonna fine. and please never give me silent treatment if I am wrong than directly teel me slap me but not it yarr. Of you will judge me than it is not good yar, everything which I do it gonna in over excitement and in happiness please don't take it serious. If it is good than accept otherwise return me.
-    </p>
+            <p>
+                And there was a little surprise and my lot of efforts to make you happy and for making feel good. I believe it you will like it and also try to keep understand and keep forever this bond with this same attitude and mindset. We need to understand each others feelings and needs because now we are have a negative mindset that's why it's making fight, but we will find out and understand each other's.
+            </p>
 
-    <p>
-      And in the last Thank you so kuchh cuttu. . 🌹🌹
-    </p>
+            <p>
+                And in the last I always say and will say that please in every situation no matter how much tough times please be happy and please also share with me.
+            </p>
 
-    <button
-      type="button"
-      onclick="goToFinal()">
-      Continue →
-    </button>
+            <p>
+                And you say n that oneday you will hate me than I swear it that it is impossible. May be I will stop yapping, joking, or anything but it will not happen. And please don't judge me yarr and don't overthink also. We are same, however we were. Nothing is change only we have to change our way of thinking. And it will also gonna fine. and please never give me silent treatment if I am wrong than directly teel me slap me but not it yarr. Of you will judge me than it is not good yar, everything which I do it gonna in over excitement and in happiness please don't take it serious. If it is good than accept otherwise return me.
+            </p>
 
-  </div>
+            <p>
+                And in the last Thank you so kuchh cuttu. . 🌹🌹
+            </p>
+
+        </div>
+
+        <button
+            class="main-btn"
+            onclick="goToFinal()">
+            Continue →
+        </button>
+
+    </div>
 </section>
 
 
-<!-- SCREEN 6 : FINAL -->
-
+<!-- SCREEN 6 -->
 <section class="screen" id="screen6">
-  <div class="card">
 
-    <h1>❤🌹</h1>
+    <div
+        class="confetti-container"
+        id="confettiContainer">
+    </div>
 
-    <p>
-      Congratulation your agreent has done now your friendship is forever with Mr. khdus 🤝. ❤🌹.
-    </p>
+    <div class="heart one">❤</div>
+    <div class="heart two">❤</div>
+    <div class="heart three">❤</div>
+    <div class="heart four">❤</div>
 
-  </div>
+    <div class="card final-card">
+
+        <h1>🎉</h1>
+
+        <div class="final-message">
+            Congratulation your agreent has done now your friendship is forever with Mr. khdus 🤝. ❤🌹.
+        </div>
+
+    </div>
+
 </section>
 
 
 <script>
 
-/* ================================
-   SUPABASE CONNECTION
-================================ */
-
-const SUPABASE_URL =
-  "https://ymssjavbfqdrfudbwffh.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_SFi9XPVxiKESQf5bOXWvSg_IcYIPyLC";
-
-const SUPABASE_SCRIPT =
-  document.createElement("script");
-
-SUPABASE_SCRIPT.src =
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-SUPABASE_SCRIPT.onload = initializeSupabase;
-
-document.head.appendChild(SUPABASE_SCRIPT);
-
-let supabaseClient = null;
-let currentUser = null;
-
-
-/* INITIALIZE SUPABASE */
-
-async function initializeSupabase(){
-
-  try{
-
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-    const result =
-      await supabaseClient.auth.getSession();
-
-    if(result.data.session){
-
-      currentUser =
-        result.data.session.user;
-
-    }else{
-
-      const signIn =
-        await supabaseClient.auth.signInAnonymously();
-
-      if(signIn.error){
-
-        console.error(
-          "Anonymous sign-in error:",
-          signIn.error
-        );
-
-        return;
-      }
-
-      currentUser =
-        signIn.data.user;
-    }
-
-  }catch(error){
-
-    console.error(
-      "Supabase initialization error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* SCREEN CONTROL */
+/* -----------------------------
+   SCREEN CONTROL
+----------------------------- */
 
 function showScreen(number){
 
-  document.querySelectorAll(".screen")
-    .forEach(function(screen){
-
-      screen.classList.remove("active");
-
+    document.querySelectorAll(".screen").forEach(function(screen){
+        screen.classList.remove("active");
     });
 
-  document.getElementById("screen" + number)
-    .classList.add("active");
+    const target = document.getElementById("screen" + number);
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+    if(target){
+        target.classList.add("active");
+    }
 
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 }
 
 
-/* ================================
-   OPEN ENVELOPE
-================================ */
+/* -----------------------------
+   ENVELOPE
+----------------------------- */
 
 function openSurprise(){
 
-  var envelope =
-    document.getElementById("envelope");
+    const envelope = document.getElementById("envelope");
 
-  envelope.classList.add("open");
+    envelope.classList.add("open");
 
-  setTimeout(function(){
+    const button = document.getElementById("openBtn");
 
-    showScreen(2);
+    button.disabled = true;
 
-  },1000);
+    setTimeout(function(){
 
+        showScreen(2);
+
+    },1000);
 }
 
 
-/* ================================
+/* -----------------------------
    AGREEMENT
-================================ */
+----------------------------- */
 
-var agreementBoxes =
-  document.querySelectorAll(".agreement");
+const agreementChecks =
+    document.querySelectorAll(".agreement");
 
-function checkConditions(){
+const agreementBtn =
+    document.getElementById("agreementBtn");
 
-  var allChecked = true;
+agreementChecks.forEach(function(check){
 
-  agreementBoxes.forEach(function(box){
+    check.addEventListener("change",function(){
 
-    if(!box.checked){
+        const allChecked =
+            Array.from(agreementChecks)
+            .every(function(item){
+                return item.checked;
+            });
 
-      allChecked = false;
+        agreementBtn.disabled = !allChecked;
 
-    }
-
-  });
-
-  document.getElementById("agreeButton")
-    .disabled = !allChecked;
-
-}
-
-
-agreementBoxes.forEach(function(box){
-
-  box.addEventListener(
-    "change",
-    checkConditions
-  );
+    });
 
 });
 
 
-/* ================================
-   SIGNATURE
-================================ */
+function goToSignature(){
 
-var canvas =
-  document.getElementById("signatureCanvas");
+    if(agreementBtn.disabled) return;
 
-var ctx =
-  canvas.getContext("2d");
+    showScreen(3);
 
-var drawing = false;
-var hasSignature = false;
-
-
-function setupCanvas(){
-
-  var rect =
-    canvas.getBoundingClientRect();
-
-  var dpr =
-    window.devicePixelRatio || 1;
-
-  canvas.width =
-    rect.width * dpr;
-
-  canvas.height =
-    rect.height * dpr;
-
-  ctx.setTransform(
-    dpr,
-    0,
-    0,
-    dpr,
-    0,
-    0
-  );
-
-  ctx.lineWidth = 3;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = "#000000";
-
+    setTimeout(function(){
+        resizeSignatureCanvas();
+    },100);
 }
 
 
-function getPosition(event){
+/* -----------------------------
+   SIGNATURE CANVAS
+----------------------------- */
 
-  var rect =
-    canvas.getBoundingClientRect();
+const canvas =
+    document.getElementById("signatureCanvas");
 
-  return {
+const ctx =
+    canvas.getContext("2d");
 
-    x:event.clientX - rect.left,
+let drawing = false;
+let hasSignature = false;
 
-    y:event.clientY - rect.top
+function resizeSignatureCanvas(){
 
-  };
+    const rect = canvas.getBoundingClientRect();
 
+    const ratio = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#000000";
 }
 
+function getPointerPosition(event){
 
-canvas.addEventListener(
-  "pointerdown",
-  function(event){
+    const rect =
+        canvas.getBoundingClientRect();
+
+    return {
+        x:event.clientX - rect.left,
+        y:event.clientY - rect.top
+    };
+}
+
+canvas.addEventListener("pointerdown",function(event){
 
     event.preventDefault();
 
     drawing = true;
 
-    canvas.setPointerCapture(
-      event.pointerId
-    );
-
-    var pos =
-      getPosition(event);
+    const pos =
+        getPointerPosition(event);
 
     ctx.beginPath();
+    ctx.moveTo(pos.x,pos.y);
 
-    ctx.moveTo(
-      pos.x,
-      pos.y
-    );
+});
 
-  }
-);
+canvas.addEventListener("pointermove",function(event){
 
-
-canvas.addEventListener(
-  "pointermove",
-  function(event){
-
-    if(!drawing){
-      return;
-    }
+    if(!drawing) return;
 
     event.preventDefault();
 
-    var pos =
-      getPosition(event);
+    const pos =
+        getPointerPosition(event);
 
-    ctx.lineTo(
-      pos.x,
-      pos.y
-    );
-
+    ctx.lineTo(pos.x,pos.y);
     ctx.stroke();
 
     hasSignature = true;
 
-    document.getElementById(
-      "signatureButton"
-    ).disabled = false;
+    document.getElementById("signatureBtn").disabled = false;
 
-  }
-);
-
+});
 
 function stopDrawing(){
 
-  drawing = false;
-
-  ctx.closePath();
+    if(drawing){
+        drawing = false;
+        ctx.closePath();
+    }
 
 }
 
-
-canvas.addEventListener(
-  "pointerup",
-  stopDrawing
-);
-
-canvas.addEventListener(
-  "pointercancel",
-  stopDrawing
-);
-
-
-/* CLEAR SIGNATURE */
+canvas.addEventListener("pointerup",stopDrawing);
+canvas.addEventListener("pointercancel",stopDrawing);
+canvas.addEventListener("pointerleave",stopDrawing);
 
 function clearSignature(){
 
-  var rect =
-    canvas.getBoundingClientRect();
+    const ratio =
+        window.devicePixelRatio || 1;
 
-  ctx.clearRect(
-    0,
-    0,
-    rect.width,
-    rect.height
-  );
-
-  hasSignature = false;
-
-  document.getElementById(
-    "signatureButton"
-  ).disabled = true;
-
-  setupCanvas();
-
-}
-
-
-/* ================================
-   GO TO SIGNATURE
-================================ */
-
-function goToSignature(){
-
-  showScreen(3);
-
-  setTimeout(function(){
-
-    setupCanvas();
-
-  },100);
-
-}
-
-
-/* ================================
-   SAVE SIGNATURE
-================================ */
-
-async function saveSignatureAndContinue(){
-
-  if(!hasSignature){
-    return;
-  }
-
-  if(!supabaseClient || !currentUser){
-
-    alert(
-      "Please wait a moment and try again."
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width / ratio,
+        canvas.height / ratio
     );
 
-    return;
+    hasSignature = false;
 
-  }
+    document.getElementById("signatureBtn").disabled = true;
+}
 
-  var button =
-    document.getElementById(
-      "signatureButton"
-    );
+window.addEventListener("resize",function(){
 
-  button.disabled = true;
-  button.textContent = "Saving...";
-
-  try{
-
-    const blob =
-      await new Promise(function(resolve){
-
-        canvas.toBlob(
-          resolve,
-          "image/png"
-        );
-
-      });
-
-    const filePath =
-      "signatures/" +
-      currentUser.id +
-      "/signature-" +
-      Date.now() +
-      ".png";
-
-    const upload =
-      await supabaseClient
-        .storage
-        .from("surprise-files")
-        .upload(
-          filePath,
-          blob,
-          {
-            contentType:"image/png",
-            upsert:false
-          }
-        );
-
-    if(upload.error){
-
-      console.error(
-        "Signature upload error:",
-        upload.error
-      );
-
-      button.disabled = false;
-      button.textContent = "Continue →";
-
-      alert(
-        "Signature could not be saved. Please try again."
-      );
-
-      return;
+    if(
+        document
+        .getElementById("screen3")
+        .classList
+        .contains("active")
+    ){
+        resizeSignatureCanvas();
     }
+
+});
+
+
+function goToPhotos(){
+
+    if(!hasSignature) return;
 
     showScreen(4);
 
-    loadGallery();
-
-  }catch(error){
-
-    console.error(
-      "Signature error:",
-      error
-    );
-
-    button.disabled = false;
-    button.textContent = "Continue →";
-
-  }
-
 }
 
 
-/* ================================
-   GALLERY
-================================ */
+/* -----------------------------
+   PHOTO GALLERY
+----------------------------- */
 
-let galleryPhotos = [];
-let currentPhotoIndex = 0;
+const photoInput =
+    document.getElementById("photoInput");
 
+const photoCount =
+    document.getElementById("photoCount");
 
-async function loadGallery(){
+const gallery =
+    document.getElementById("gallery");
 
-  const frame =
-    document.getElementById(
-      "galleryFrame"
-    );
+const galleryImage =
+    document.getElementById("galleryImage");
 
-  const empty =
-    document.getElementById(
-      "galleryEmpty"
-    );
+const galleryInfo =
+    document.getElementById("galleryInfo");
 
-  const count =
-    document.getElementById(
-      "galleryCount"
-    );
+let selectedPhotos = [];
+let currentPhoto = 0;
 
-  try{
-
-    if(!supabaseClient){
-
-      empty.textContent =
-        "Loading photos...";
-
-      return;
-
-    }
-
-    const result =
-      await supabaseClient
-        .storage
-        .from("surprise-files")
-        .list(
-          "gallery",
-          {
-            limit:100,
-            sort:{
-              column:"name",
-              order:"asc"
-            }
-          }
-        );
-
-    if(result.error){
-
-      console.error(
-        "Gallery list error:",
-        result.error
-      );
-
-      empty.textContent =
-        "Photos could not be loaded.";
-
-      return;
-
-    }
+photoInput.addEventListener("change",function(){
 
     const files =
-      result.data || [];
+        Array.from(photoInput.files || []);
 
-    const imageFiles =
-      files.filter(function(file){
+    selectedPhotos = files;
+    currentPhoto = 0;
 
-        return file.name &&
-          !file.name.endsWith("/");
+    if(files.length === 0){
 
-      });
+        photoCount.textContent =
+            "No photos selected";
 
-    galleryPhotos = [];
+        gallery.classList.remove("show");
+        galleryInfo.textContent = "";
 
-    for(
-      let i = 0;
-      i < imageFiles.length;
-      i++
-    ){
+        return;
+    }
 
-      const file =
-        imageFiles[i];
+    photoCount.textContent =
+        files.length + " photo" +
+        (files.length > 1 ? "s" : "") +
+        " selected";
 
-      const path =
-        "gallery/" + file.name;
+    gallery.classList.add("show");
 
-      const signed =
-        await supabaseClient
-          .storage
-          .from("surprise-files")
-          .createSignedUrl(
-            path,
-            3600
-          );
+    showPhoto();
 
-      if(
-        !signed.error &&
-        signed.data &&
-        signed.data.signedUrl
-      ){
+});
 
-        galleryPhotos.push(
-          signed.data.signedUrl
+
+function showPhoto(){
+
+    if(selectedPhotos.length === 0) return;
+
+    const file =
+        selectedPhotos[currentPhoto];
+
+    if(galleryImage.dataset.url){
+
+        URL.revokeObjectURL(
+            galleryImage.dataset.url
         );
 
-      }
-
     }
 
-    frame
-      .querySelectorAll("img")
-      .forEach(function(img){
+    const url =
+        URL.createObjectURL(file);
 
-        img.remove();
+    galleryImage.src = url;
+    galleryImage.dataset.url = url;
 
-      });
-
-    if(galleryPhotos.length === 0){
-
-      empty.style.display = "block";
-
-      empty.textContent =
-        "No photos available.";
-
-      count.textContent = "";
-
-      return;
-
-    }
-
-    empty.style.display = "none";
-
-    galleryPhotos.forEach(
-      function(url,index){
-
-        const img =
-          document.createElement("img");
-
-        img.src = url;
-
-        img.alt =
-          "Memory " + (index + 1);
-
-        if(index === 0){
-
-          img.classList.add("active");
-
-        }
-
-        frame.appendChild(img);
-
-      }
-    );
-
-    currentPhotoIndex = 0;
-
-    updateGallery();
-
-  }catch(error){
-
-    console.error(
-      "Gallery error:",
-      error
-    );
-
-    empty.textContent =
-      "Photos could not be loaded.";
-
-  }
-
-}
-
-
-function updateGallery(){
-
-  const images =
-    document.querySelectorAll(
-      "#galleryFrame img"
-    );
-
-  images.forEach(
-    function(img,index){
-
-      img.classList.toggle(
-        "active",
-        index === currentPhotoIndex
-      );
-
-    }
-  );
-
-  const count =
-    document.getElementById(
-      "galleryCount"
-    );
-
-  if(galleryPhotos.length){
-
-    count.textContent =
-      (currentPhotoIndex + 1) +
-      " / " +
-      galleryPhotos.length;
-
-  }
-
-}
-
-
-function previousPhoto(){
-
-  if(galleryPhotos.length === 0){
-    return;
-  }
-
-  currentPhotoIndex--;
-
-  if(currentPhotoIndex < 0){
-
-    currentPhotoIndex =
-      galleryPhotos.length - 1;
-
-  }
-
-  updateGallery();
+    galleryInfo.textContent =
+        (currentPhoto + 1) +
+        " / " +
+        selectedPhotos.length;
 
 }
 
 
 function nextPhoto(){
 
-  if(galleryPhotos.length === 0){
-    return;
-  }
+    if(selectedPhotos.length === 0) return;
 
-  currentPhotoIndex++;
+    currentPhoto =
+        (currentPhoto + 1) %
+        selectedPhotos.length;
 
-  if(
-    currentPhotoIndex >=
-    galleryPhotos.length
-  ){
-
-    currentPhotoIndex = 0;
-
-  }
-
-  updateGallery();
+    showPhoto();
 
 }
 
 
-/* ================================
-   VISITOR PHOTO UPLOAD
-================================ */
+function previousPhoto(){
 
-document.getElementById(
-  "photoInput"
-).addEventListener(
-  "change",
-  async function(event){
+    if(selectedPhotos.length === 0) return;
 
-    const files =
-      Array.from(
-        event.target.files || []
-      );
+    currentPhoto =
+        (currentPhoto - 1 +
+        selectedPhotos.length) %
+        selectedPhotos.length;
 
-    const status =
-      document.getElementById(
-        "uploadStatus"
-      );
+    showPhoto();
 
-    if(files.length === 0){
+}
 
-      status.textContent =
-        "No photos selected";
-
-      return;
-
-    }
-
-    status.textContent =
-      files.length +
-      " photos selected";
-
-    if(
-      !supabaseClient ||
-      !currentUser
-    ){
-
-      status.textContent =
-        "Please wait a moment and try again.";
-
-      return;
-
-    }
-
-    for(
-      let i = 0;
-      i < files.length;
-      i++
-    ){
-
-      const file = files[i];
-
-      const safeName =
-        file.name
-          .replace(
-            /[^a-zA-Z0-9._-]/g,
-            "_"
-          );
-
-      const path =
-        "visitor-photos/" +
-        currentUser.id +
-        "/" +
-        Date.now() +
-        "-" +
-        i +
-        "-" +
-        safeName;
-
-      const upload =
-        await supabaseClient
-          .storage
-          .from("surprise-files")
-          .upload(
-            path,
-            file,
-            {
-              contentType:
-                file.type || "image/jpeg",
-              upsert:false
-            }
-          );
-
-      if(upload.error){
-
-        console.error(
-          "Visitor photo upload error:",
-          upload.error
-        );
-
-      }
-
-    }
-
-    status.textContent =
-      files.length +
-      " photos selected";
-
-  }
-);
-
-
-/* ================================
-   NOTES
-================================ */
 
 function goToNotes(){
 
-  showScreen(5);
+    showScreen(5);
 
 }
 
 
-/* ================================
-   FINAL SCREEN
-================================ */
+/* -----------------------------
+   FINAL SCREEN + RIBBON
+----------------------------- */
 
 function goToFinal(){
 
-  showScreen(6);
+    showScreen(6);
 
-  createConfetti();
+    createConfetti();
 
 }
 
 
-/* ================================
-   CONFETTI
-================================ */
+/* -----------------------------
+   CONFETTI / RIBBON GENERATOR
+----------------------------- */
 
 function createConfetti(){
 
-  const container =
-    document.getElementById(
-      "confettiContainer"
-    );
+    const container =
+        document.getElementById("confettiContainer");
 
-  container.innerHTML = "";
+    container.innerHTML = "";
 
-  for(
-    let i = 0;
-    i < 90;
-    i++
-  ){
+    const pieces = 90;
 
-    const piece =
-      document.createElement("div");
+    const shapes = [
+        "ribbon",
+        "ribbon",
+        "small",
+        ""
+    ];
 
-    piece.className =
-      "confetti";
+    for(let i = 0; i < pieces; i++){
 
-    piece.style.left =
-      Math.random() * 100 + "%";
+        const piece =
+            document.createElement("span");
 
-    piece.style.animationDuration =
-      (3 + Math.random() * 4) + "s";
+        piece.className =
+            "confetti " +
+            shapes[
+                Math.floor(
+                    Math.random() * shapes.length
+                )
+            ];
 
-    piece.style.animationDelay =
-      Math.random() * 1.5 + "s";
+        piece.style.left =
+            (Math.random() * 100) + "%";
 
-    piece.style.transform =
-      "rotate(" +
-      Math.random() * 360 +
-      "deg)";
+        piece.style.setProperty(
+            "--drift",
+            ((Math.random() * 180) - 90) + "px"
+        );
 
-    piece.style.background =
-      [
-        "#ff4f91",
-        "#9b5cff",
-        "#ffd166",
-        "#06d6a0",
-        "#4cc9f0"
-      ][
-        Math.floor(
-          Math.random() * 5
-        )
-      ];
+        piece.style.animationDuration =
+            (4 + Math.random() * 5) + "s";
 
-    container.appendChild(piece);
+        piece.style.animationDelay =
+            (Math.random() * 3) + "s";
 
-  }
+        piece.style.transform =
+            "rotate(" +
+            (Math.random() * 360) +
+            "deg)";
+
+        /*
+          Different ribbon/confetti shades
+          are created without external images.
+        */
+
+        const colors = [
+            "#f06fa8",
+            "#c56be8",
+            "#ffbd59",
+            "#65c9c1",
+            "#7e8bea",
+            "#ef7b65",
+            "#d98ac2",
+            "#8ecf72"
+        ];
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        piece.style.width =
+            (5 + Math.random() * 8) + "px";
+
+        piece.style.height =
+            (14 + Math.random() * 25) + "px";
+
+        container.appendChild(piece);
+
+    }
 
 }
 
 
-/* ================================
-   RESIZE
-================================ */
+/* -----------------------------
+   INITIAL SETUP
+----------------------------- */
 
-window.addEventListener(
-  "resize",
-  function(){
+window.addEventListener("load",function(){
 
-    if(
-      document.getElementById("screen3")
-        .classList.contains("active")
-    ){
+    resizeSignatureCanvas();
 
-      setupCanvas();
-
-    }
-
-  }
-);
+});
 
 </script>
 
 </body>
-  </html>
-select
-  policyname,
-  cmd,
-  roles,
-  qual,
-  with_check
-from pg_policies
-where schemaname = 'storage'
-  and tablename = 'objects'
-order by policyname;
+</html>
